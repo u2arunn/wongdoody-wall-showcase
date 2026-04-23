@@ -5,66 +5,76 @@
 <title>Wongdoody Chennai · Interactive Wall</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Tamil:wght@400;500&display=swap" rel="stylesheet">
+<!-- Trending 2025 font stack: Bricolage Grotesque (variable display), Instrument Serif (editorial italic), Geist Mono -->
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600&family=Noto+Sans+Tamil:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --paper: #F6EFE1;
-    --paper-2: #EEE4D1;
-    --paper-3: #E7DAC0;
-    --ink: #1A1A1A;
-    --ink-soft: #3C3C3C;
-    --ink-mute: #78736B;
-    --rule: rgba(26,26,26,0.15);
-    --vermilion: #C1272D;
-    --teal: #2D5362;
-    --ochre: #B97B2A;
-    --olive: #5B6B3E;
-    --clay: #A04E28;
-    --rose: #C75B7A;
-    --gold: #B8860B;
+    --paper: #F4EFE4;            /* warm cream */
+    --paper-2: #EBE3D2;
+    --paper-3: #E2D5BE;
+    --ink: #0F0F0F;
+    --ink-2: #2A2A2A;
+    --ink-mute: #7A7368;
+    --rule: rgba(15,15,15,0.14);
+    --fire: #FF3D2E;             /* signature red — hotter than before */
+    --stone: #2B4D5F;            /* deep stone blue */
+    --amber: #D4802A;
+    --moss: #4F7239;
+    --wine: #782C4B;
+    --butter: #F5D76E;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: 'Inter', system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
-  /* Desktop-only — minimum 1280px wide */
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Bricolage Grotesque', system-ui, -apple-system, sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "ss01" 1, "ss02" 1;
+  }
   body {
     min-width: 1280px;
     overflow-x: auto;
   }
   body::before {
     content: '';
-    position: fixed; inset: 0;
+    position: fixed; inset: 0; z-index: -1;
     background-image:
-      radial-gradient(circle at 15% 18%, rgba(193,39,45,0.04) 0, transparent 40%),
-      radial-gradient(circle at 88% 72%, rgba(45,83,98,0.04) 0, transparent 40%),
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.04'/></svg>");
-    pointer-events: none; z-index: -1;
+      radial-gradient(circle at 12% 14%, rgba(255,61,46,0.06) 0, transparent 40%),
+      radial-gradient(circle at 88% 70%, rgba(43,77,95,0.05) 0, transparent 42%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.045'/></svg>");
+    pointer-events: none;
   }
-  ::selection { background: var(--vermilion); color: var(--paper); }
+  ::selection { background: var(--fire); color: var(--paper); }
 
-  /* Typography base */
-  .serif { font-family: 'Fraunces', serif; }
-  .mono  { font-family: 'JetBrains Mono', monospace; }
+  /* Utility */
+  .serif { font-family: 'Instrument Serif', serif; font-style: italic; }
+  .mono  { font-family: 'Geist Mono', ui-monospace, monospace; }
   .tam   { font-family: 'Noto Sans Tamil', serif; }
-  h1, h2, h3, h4 { margin: 0; font-weight: 400; letter-spacing: -0.02em; line-height: 1.05; }
-  h1 { font-family: 'Fraunces', serif; font-weight: 300; font-size: 112px; }
-  h2 { font-family: 'Fraunces', serif; font-weight: 300; font-size: 64px; }
-  h3 { font-family: 'Fraunces', serif; font-weight: 400; font-size: 28px; }
-  h4 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 22px; }
-  p { margin: 0; color: var(--ink-soft); line-height: 1.6; }
+
+  h1, h2, h3, h4 { margin: 0; letter-spacing: -0.02em; }
+  h1 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 500; font-size: 220px; letter-spacing: -0.055em; line-height: 0.86; font-variation-settings: "opsz" 96, "wght" 500; }
+  h2 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 500; font-size: 72px; letter-spacing: -0.035em; line-height: 0.95; font-variation-settings: "opsz" 96, "wght" 500; }
+  h3 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 500; font-size: 32px; letter-spacing: -0.02em; line-height: 1.1; }
+  h4 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 20px; letter-spacing: -0.01em; line-height: 1.2; }
+  p { margin: 0; color: var(--ink-2); line-height: 1.55; font-size: 16px; }
+  em.italic, .italic-serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; }
 
   .eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase;
-    color: var(--vermilion); font-weight: 500;
-    display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--fire); font-weight: 500;
+    display: inline-flex; align-items: center; gap: 12px;
+    margin-bottom: 24px;
   }
-  .eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--vermilion); }
+  .eyebrow::before { content: ''; width: 28px; height: 1px; background: currentColor; }
 
-  main, header.hero, section.closing { max-width: 1440px; margin: 0 auto; padding: 0 64px; }
-  section { padding: 120px 0 40px; }
+  main, header.hero, section.closing { max-width: 1440px; margin: 0 auto; padding: 0 80px; }
+  section { padding: 140px 0 40px; }
 
   /* Reveal */
-  .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(.2,.7,.2,1); }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.2,.7,.2,1); }
   .reveal.show { opacity: 1; transform: none; }
   .reveal[data-d="1"] { transition-delay: .1s; }
   .reveal[data-d="2"] { transition-delay: .2s; }
@@ -73,518 +83,689 @@
   .reveal[data-d="5"] { transition-delay: .5s; }
   .reveal[data-d="6"] { transition-delay: .6s; }
 
-  /* ═══════════════ TOPBAR ═══════════════ */
+  /* ═══════ Topbar — brand mark only, no CTA ═══════ */
   .topbar {
     position: fixed; top: 0; left: 0; right: 0; z-index: 60;
     display: flex; justify-content: space-between; align-items: center;
-    padding: 18px 64px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; letter-spacing: 0.25em;
+    padding: 20px 80px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.24em;
     text-transform: uppercase; color: var(--ink-mute);
-    background: rgba(246,239,225,0.85); backdrop-filter: blur(10px);
+    background: rgba(244,239,228,0.8); backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--rule);
   }
-  .topbar b { color: var(--ink); font-weight: 600; }
-  .topbar .demo {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--vermilion); color: var(--paper);
-    padding: 10px 18px; border-radius: 999px;
-    text-decoration: none; letter-spacing: 0.15em;
-    transition: transform 0.3s;
+  .topbar .brand {
+    display: flex; align-items: center; gap: 16px;
   }
-  .topbar .demo:hover { transform: translateX(2px); }
-  .topbar .demo .dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: #00FF88; box-shadow: 0 0 10px #00FF88;
-    animation: livePulse 1.6s ease-in-out infinite;
+  .topbar .brand b {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700; font-size: 14px;
+    color: var(--ink); letter-spacing: 0.05em;
   }
-  @keyframes livePulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+  .topbar .brand .sep { opacity: 0.4; }
+  .topbar .right {
+    display: flex; gap: 30px; align-items: center;
+  }
+  .topbar .right a { color: var(--ink-mute); text-decoration: none; transition: color 0.25s; }
+  .topbar .right a:hover { color: var(--fire); }
 
-  /* ═══════════════ HERO ═══════════════ */
-  .hero { padding: 160px 64px 100px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
-  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
-  .hero-title {
-    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
-    font-size: 200px; line-height: 0.88; letter-spacing: -0.045em;
+  /* ═══════ HERO ═══════ */
+  .hero {
+    padding: 170px 80px 120px;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-content: center;
+    position: relative;
   }
-  .hero-title .dot { color: var(--vermilion); font-style: normal; }
+  .hero-kolam {
+    position: absolute; top: 150px; right: 80px;
+    animation: spin 40s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .hero-top {
+    display: grid; grid-template-columns: auto 1fr; gap: 80px; align-items: end;
+    margin-bottom: 60px;
+  }
+  .hero-title {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-variation-settings: "opsz" 96, "wght" 300;
+    font-size: 260px;
+    line-height: 0.82;
+    letter-spacing: -0.07em;
+    font-weight: 300;
+    color: var(--ink);
+  }
+  .hero-title .d {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--fire);
+    letter-spacing: -0.04em;
+    font-size: 0.94em;
+    display: inline-block;
+    transform: translateY(-0.04em);
+  }
+  .hero-title .dot { color: var(--fire); font-style: normal; }
+
+  .hero-right {
+    padding-bottom: 14px;
+    max-width: 500px;
+  }
   .hero-right .kicker {
-    font-family: 'JetBrains Mono', monospace; font-size: 12px;
-    letter-spacing: 0.35em; text-transform: uppercase; color: var(--ink-mute);
-    margin-bottom: 24px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-mute); margin-bottom: 28px;
   }
   .hero-right .kicker .dot {
-    display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-    background: var(--vermilion); margin: 0 10px; vertical-align: 2px;
+    display: inline-block; width: 6px; height: 6px;
+    background: var(--fire); margin: 0 12px; vertical-align: 2px;
+    border-radius: 50%;
   }
   .hero-lede {
-    font-family: 'Fraunces', serif; font-weight: 300; font-size: 30px;
-    line-height: 1.3; color: var(--ink); margin: 0 0 36px;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400; font-style: italic;
+    font-size: 40px; line-height: 1.15;
+    color: var(--ink); margin: 0;
+    letter-spacing: -0.015em;
   }
-  .hero-lede em { color: var(--vermilion); font-style: italic; }
-  .hero-meta {
-    display: grid; grid-template-columns: repeat(3, auto); gap: 40px;
-    padding: 24px 0 0; border-top: 1px solid var(--rule);
-  }
-  .hero-meta .k { color: var(--ink-mute); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; }
-  .hero-meta .v { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 500; margin-top: 6px; color: var(--ink); }
+  .hero-lede .n { font-style: normal; font-family: 'Bricolage Grotesque', sans-serif; color: var(--fire); font-weight: 500; }
 
-  .hero-cta {
-    display: inline-flex; align-items: center; gap: 14px;
+  /* Single primary CTA — only one on first screen */
+  .primary-cta {
+    display: inline-flex; align-items: center; gap: 20px;
+    padding: 22px 32px;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    border-radius: 999px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-weight: 500; font-size: 13px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    transition: transform 0.35s cubic-bezier(.2,.8,.2,1), background 0.35s;
     margin-top: 36px;
-    padding: 18px 28px;
-    background: var(--ink); color: var(--paper);
-    text-decoration: none; border-radius: 999px;
-    font-family: 'JetBrains Mono', monospace; font-size: 12px;
-    letter-spacing: 0.25em; text-transform: uppercase;
-    transition: transform 0.3s, background 0.3s;
-  }
-  .hero-cta:hover { background: var(--vermilion); transform: translateX(4px); }
-  .hero-cta .arrow { display: inline-block; transition: transform 0.3s; }
-  .hero-cta:hover .arrow { transform: translateX(4px); }
-  .hero-cta .live {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 4px 10px; border-radius: 999px;
-    background: #00FF88; color: var(--ink);
-    font-weight: 700; font-size: 10px;
-  }
-  .hero-cta .live::before {
-    content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--ink);
-    animation: livePulse 1.6s ease-in-out infinite;
-  }
-
-  .hero-kolam { position: absolute; top: 120px; right: 64px; }
-
-  /* ═══════════════ LIVE DEMO BANNER ═══════════════ */
-  .demo-banner {
-    margin: 80px auto 0;
-    max-width: 1312px;
-    padding: 36px 40px;
-    background: var(--ink); color: var(--paper);
-    border-radius: 24px;
-    display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;
     position: relative; overflow: hidden;
   }
-  .demo-banner::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(circle at 85% 50%, rgba(193,39,45,0.28) 0, transparent 55%);
+  .primary-cta:hover { background: var(--fire); transform: translateY(-2px); }
+  .primary-cta .live {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 4px 12px;
+    background: #B8FF5C;
+    color: var(--ink);
+    border-radius: 99px;
+    font-weight: 700; font-size: 10px;
+    letter-spacing: 0.25em;
   }
-  .demo-banner > * { position: relative; z-index: 1; }
-  .demo-banner .label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase; color: #C1FF00; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-  .demo-banner .label::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #C1FF00; box-shadow: 0 0 10px #C1FF00; animation: livePulse 1.6s ease-in-out infinite; }
-  .demo-banner h3 { font-family: 'Fraunces', serif; font-weight: 300; font-size: 42px; line-height: 1.1; color: var(--paper); }
-  .demo-banner h3 em { color: #C1FF00; font-style: italic; }
-  .demo-banner .url { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--ink-mute); margin-top: 6px; }
-  .demo-banner .url a { color: #C1FF00; text-decoration: none; border-bottom: 1px solid rgba(193,255,0,0.3); }
-  .demo-banner .big-btn {
-    display: inline-flex; align-items: center; gap: 14px;
-    padding: 22px 34px; background: #C1FF00; color: var(--ink);
-    text-decoration: none; border-radius: 999px;
-    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px;
-    letter-spacing: 0.3em; text-transform: uppercase;
-    transition: transform 0.3s, background 0.3s;
-    white-space: nowrap;
+  .primary-cta .live::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--ink);
+    animation: blink 1.6s ease-in-out infinite;
   }
-  .demo-banner .big-btn:hover { transform: scale(1.05); background: var(--paper); }
+  .primary-cta .arrow { transition: transform 0.35s; display: inline-block; }
+  .primary-cta:hover .arrow { transform: translate(4px, -4px) rotate(45deg); }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-  /* ═══════════════ SCREEN GALLERY ═══════════════ */
+  /* Meta row below hero */
+  .hero-meta {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
+    padding-top: 40px;
+    border-top: 1px solid var(--rule);
+  }
+  .hero-meta .k {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .hero-meta .v {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-variation-settings: "opsz" 96;
+    font-size: 32px; font-weight: 500;
+    margin-top: 8px; color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .hero-meta .v em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--fire); font-weight: 400; }
+
+  /* ═══════ Marquee strip (trending) ═══════ */
+  .marquee {
+    margin: 80px -80px 0;
+    padding: 24px 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 80px;
+    white-space: nowrap;
+    animation: marq 40s linear infinite;
+  }
+  @keyframes marq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee span {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 54px;
+    line-height: 1;
+    font-weight: 400;
+    display: inline-flex; align-items: center; gap: 80px;
+  }
+  .marquee span::after {
+    content: '✦';
+    color: var(--fire);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-style: normal;
+  }
+
+  /* ═══════ SCREENS GALLERY ═══════ */
   .screens {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
     margin-top: 60px;
   }
   .screen-card {
-    background: var(--paper-2);
-    border-radius: 16px;
+    background: var(--ink);
+    border-radius: 20px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 20px 50px -30px rgba(0,0,0,0.35);
-    transition: transform 0.45s, box-shadow 0.45s;
+    transition: transform 0.5s cubic-bezier(.2,.8,.2,1);
   }
-  .screen-card:hover { transform: translateY(-8px); box-shadow: 0 40px 80px -40px rgba(0,0,0,0.4); }
-  .screen-card .label {
-    position: absolute; top: 16px; left: 16px;
-    background: rgba(0,0,0,0.75); color: var(--paper);
-    padding: 6px 12px; border-radius: 999px;
-    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  .screen-card:hover { transform: translateY(-10px); }
+  .screen-card .tag {
+    position: absolute; top: 16px; left: 16px; z-index: 2;
+    background: rgba(244,239,228,0.92); color: var(--ink);
+    padding: 7px 14px; border-radius: 999px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px; font-weight: 500;
     letter-spacing: 0.2em; text-transform: uppercase;
-    z-index: 2; backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
   }
   .screen-card img {
     width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;
-    transition: transform 0.6s;
+    transition: transform 0.8s cubic-bezier(.2,.8,.2,1);
   }
-  .screen-card:hover img { transform: scale(1.04); }
+  .screen-card:hover img { transform: scale(1.05); }
   .screen-card .caption {
-    padding: 22px 24px;
-    border-top: 1px solid var(--rule);
+    padding: 24px 26px;
+    color: var(--paper);
   }
-  .screen-card .caption .no {
-    font-family: 'JetBrains Mono', monospace; font-size: 10px;
-    color: var(--vermilion); letter-spacing: 0.25em; margin-bottom: 6px;
+  .screen-card .caption .sub {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(244,239,228,0.5);
   }
-  .screen-card .caption h4 { font-size: 20px; color: var(--ink); }
-  .screen-card .caption p { font-size: 13px; color: var(--ink-mute); margin-top: 6px; line-height: 1.5; }
+  .screen-card .caption h4 {
+    font-size: 22px; font-weight: 600;
+    color: var(--paper);
+    margin-top: 8px;
+  }
+  .screen-card .caption p {
+    font-size: 13px; color: rgba(244,239,228,0.65);
+    margin-top: 8px; line-height: 1.5;
+  }
 
-  /* ═══════════════ STAT STRIP ═══════════════ */
+  /* ═══════ STATS STRIP ═══════ */
   .stat-strip {
     display: grid; grid-template-columns: repeat(6, 1fr);
+    margin-top: 80px;
     border-top: 1px solid var(--ink);
     border-left: 1px solid var(--rule);
-    margin-top: 70px;
   }
   .stat-strip .cell {
     border-right: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
-    padding: 30px 22px;
+    padding: 36px 24px;
     transition: background 0.3s;
   }
   .stat-strip .cell:hover { background: var(--paper-2); }
-  .stat-strip .n { font-family: 'Fraunces', serif; font-size: 54px; font-weight: 300; line-height: 1; letter-spacing: -0.03em; }
-  .stat-strip .cell:nth-child(1) .n { color: var(--vermilion); }
-  .stat-strip .cell:nth-child(2) .n { color: var(--teal); }
-  .stat-strip .cell:nth-child(3) .n { color: var(--ochre); }
-  .stat-strip .cell:nth-child(4) .n { color: var(--olive); }
-  .stat-strip .cell:nth-child(5) .n { color: var(--clay); }
-  .stat-strip .cell:nth-child(6) .n { color: var(--rose); }
+  .stat-strip .n {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-variation-settings: "opsz" 96, "wght" 400;
+    font-size: 72px; line-height: 0.9;
+    letter-spacing: -0.05em;
+  }
+  .stat-strip .cell:nth-child(1) .n { color: var(--fire); }
+  .stat-strip .cell:nth-child(2) .n { color: var(--stone); }
+  .stat-strip .cell:nth-child(3) .n { color: var(--amber); }
+  .stat-strip .cell:nth-child(4) .n { color: var(--moss); }
+  .stat-strip .cell:nth-child(5) .n { color: var(--wine); }
+  .stat-strip .cell:nth-child(6) .n { color: var(--ink); }
   .stat-strip .lbl {
-    font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase;
-    letter-spacing: 0.25em; color: var(--ink-mute); margin-top: 12px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.25em; color: var(--ink-mute);
+    margin-top: 14px;
   }
 
-  /* ═══════════════ FLOW ═══════════════ */
+  /* ═══════ FLOW ═══════ */
   .flow {
     display: grid; grid-template-columns: repeat(4, 1fr);
-    margin-top: 50px; gap: 0;
+    gap: 0; margin-top: 60px;
     border-top: 1px solid var(--ink);
   }
   .flow-step {
     position: relative;
-    padding: 36px 28px 40px;
+    padding: 40px 28px 44px;
     border-right: 1px solid var(--rule);
+    transition: background 0.3s;
   }
   .flow-step:last-child { border-right: 0; }
-  .flow-step::before { content: ''; position: absolute; top: -1px; left: 0; width: 80px; height: 4px; background: var(--accent); }
-  .flow-step .icon-ring {
-    width: 64px; height: 64px; border-radius: 50%;
-    border: 2px solid var(--accent);
-    display: grid; place-items: center;
-    font-family: 'Fraunces', serif; font-style: italic; font-size: 26px; font-weight: 500;
-    color: var(--accent);
-    margin-bottom: 20px;
+  .flow-step:hover { background: var(--paper-2); }
+  .flow-step::before {
+    content: ''; position: absolute; top: -1px; left: 0; width: 80px; height: 4px;
+    background: var(--accent);
   }
-  .flow-step h4 { font-size: 22px; font-weight: 500; margin-bottom: 10px; }
-  .flow-step p { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .flow-step .num {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-weight: 400;
+    font-size: 64px; line-height: 1;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+  }
+  .flow-step h4 {
+    font-size: 24px; font-weight: 600;
+    margin: 20px 0 12px;
+  }
+  .flow-step p { font-size: 14px; }
 
-  /* ═══════════════ ADVANTAGES (keypoints) ═══════════════ */
+  /* ═══════ ADVANTAGES — keypoint grid ═══════ */
   .advs {
     display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 0; margin-top: 50px;
+    gap: 0; margin-top: 60px;
     border-top: 1px solid var(--ink);
     border-left: 1px solid var(--rule);
   }
   .adv {
-    padding: 32px 24px 36px;
+    padding: 36px 28px 40px;
     border-right: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
     position: relative;
-    background: transparent;
-    transition: background 0.3s, padding-top 0.3s;
+    transition: background 0.35s, transform 0.35s;
   }
-  .adv:hover { background: var(--paper-2); }
+  .adv:hover {
+    background: var(--ink);
+    color: var(--paper);
+    transform: scale(1.02);
+    z-index: 2;
+  }
+  .adv:hover h4, .adv:hover .no { color: var(--paper); }
+  .adv:hover p { color: rgba(244,239,228,0.7); }
+  .adv:hover .icon { color: var(--accent); }
   .adv .no {
-    font-family: 'JetBrains Mono', monospace; font-size: 10px;
-    color: var(--accent); letter-spacing: 0.25em;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px; letter-spacing: 0.25em;
+    color: var(--ink-mute);
+    transition: color 0.3s;
   }
   .adv .icon {
-    width: 48px; height: 48px;
-    display: grid; place-items: center;
-    font-size: 28px;
-    margin: 14px 0 12px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 44px; font-weight: 300;
     color: var(--accent);
+    margin: 18px 0 14px;
+    line-height: 1;
+    transition: color 0.3s;
   }
-  .adv h4 { font-size: 18px; font-weight: 500; color: var(--ink); margin-bottom: 8px; }
-  .adv p { font-size: 12px; color: var(--ink-mute); line-height: 1.55; }
+  .adv h4 { font-size: 20px; margin-bottom: 10px; transition: color 0.3s; }
+  .adv p { font-size: 13px; line-height: 1.5; transition: color 0.3s; }
 
-  /* ═══════════════ CLIENT IMPACT — two-col ═══════════════ */
+  /* ═══════ CLIENT IMPACT ═══════ */
   .impact-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: stretch;
     margin-top: 50px;
   }
   .impact-visual {
     position: relative;
-    padding: 50px;
+    padding: 60px 50px;
     background: var(--ink);
     color: var(--paper);
-    border-radius: 20px;
-    aspect-ratio: 4/3;
+    border-radius: 24px;
     overflow: hidden;
+    display: flex; flex-direction: column; justify-content: space-between;
   }
   .impact-visual::before {
     content: '';
     position: absolute; inset: 0;
     background:
-      radial-gradient(circle at 20% 30%, rgba(193,39,45,0.35) 0, transparent 45%),
-      radial-gradient(circle at 78% 72%, rgba(45,83,98,0.35) 0, transparent 50%);
+      radial-gradient(circle at 20% 30%, rgba(255,61,46,0.4) 0, transparent 50%),
+      radial-gradient(circle at 78% 72%, rgba(43,77,95,0.4) 0, transparent 55%);
   }
+  .impact-visual > * { position: relative; z-index: 2; }
   .impact-visual h3 {
-    position: relative; z-index: 2;
-    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
-    font-size: 72px; line-height: 0.95; letter-spacing: -0.03em;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-variation-settings: "opsz" 96;
+    font-weight: 400;
+    font-size: 84px; line-height: 0.95;
+    letter-spacing: -0.045em;
   }
-  .impact-visual h3 em { color: #C1FF00; font-style: italic; }
+  .impact-visual h3 em {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    color: #B8FF5C;
+  }
   .impact-visual .quote {
-    position: relative; z-index: 2;
-    font-family: 'Fraunces', serif; font-weight: 300; font-size: 18px;
-    color: rgba(246,239,225,0.75); max-width: 400px; margin-top: 28px; line-height: 1.5;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400; font-style: italic;
+    font-size: 22px;
+    color: rgba(244,239,228,0.75);
+    max-width: 440px;
+    line-height: 1.35;
   }
-  .impact-visual .quote em { color: var(--paper); font-style: italic; }
+  .impact-visual .quote span { color: var(--paper); }
+
   .impact-list {
-    display: grid; grid-template-columns: 1fr; gap: 0;
-    border-top: 1px solid var(--rule);
+    display: grid; grid-template-columns: 1fr;
+    border-top: 1px solid var(--ink);
   }
   .impact-list .row {
     display: grid; grid-template-columns: 140px 1fr auto;
-    gap: 24px; padding: 22px 0;
+    gap: 24px; padding: 26px 0;
     border-bottom: 1px solid var(--rule);
     align-items: center;
-    transition: padding-left 0.3s;
+    transition: padding-left 0.35s;
   }
-  .impact-list .row:hover { padding-left: 16px; }
+  .impact-list .row:hover { padding-left: 18px; }
   .impact-list .big {
-    font-family: 'Fraunces', serif; font-weight: 300;
-    font-size: 44px; line-height: 1; color: var(--accent);
-    letter-spacing: -0.03em;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-variation-settings: "opsz" 96;
+    font-weight: 300;
+    font-size: 56px; line-height: 0.95;
+    color: var(--accent);
+    letter-spacing: -0.04em;
   }
-  .impact-list .name { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 500; }
-  .impact-list .desc { font-size: 13px; color: var(--ink-mute); margin-top: 4px; }
+  .impact-list .big em {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-weight: 400;
+  }
+  .impact-list .name {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 20px; font-weight: 600;
+  }
+  .impact-list .desc {
+    font-size: 13px; color: var(--ink-mute); margin-top: 4px;
+    line-height: 1.5;
+  }
   .impact-list .tag {
-    font-family: 'JetBrains Mono', monospace; font-size: 10px;
-    color: var(--ink-mute); letter-spacing: 0.2em; text-transform: uppercase;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px; color: var(--ink-mute);
+    letter-spacing: 0.2em; text-transform: uppercase;
   }
 
-  /* ═══════════════ TECH PILLS ═══════════════ */
+  /* ═══════ WHY THIS WINS ═══════ */
+  .why-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-top: 60px;
+  }
+  .why-card {
+    padding: 44px 32px;
+    background: var(--paper-2);
+    border-radius: 20px;
+    position: relative; overflow: hidden;
+    transition: transform 0.5s cubic-bezier(.2,.8,.2,1), background 0.5s;
+  }
+  .why-card:hover { transform: translateY(-8px); background: var(--paper-3); }
+  .why-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+    background: var(--accent);
+  }
+  .why-card .badge {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px; letter-spacing: 0.28em;
+    color: var(--accent); text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+  .why-card h3 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 400;
+    font-size: 32px; line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .why-card h3 em {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  .why-card p {
+    margin-top: 18px; font-size: 14px; line-height: 1.55;
+  }
+
+  /* ═══════ SPEC SHEET ═══════ */
+  .spec {
+    margin-top: 60px;
+    display: grid; grid-template-columns: 360px 1fr; gap: 70px;
+    padding: 50px 0;
+    border-top: 1px solid var(--ink);
+  }
+  .spec-left h3 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-variation-settings: "opsz" 96;
+    font-weight: 400;
+    font-size: 52px;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+  }
+  .spec-left h3 em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--fire); }
+  .spec-left p { margin-top: 20px; font-size: 15px; }
+  .spec-list {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-left: 1px solid var(--rule);
+    border-top: 1px solid var(--rule);
+  }
+  .spec-list .row {
+    padding: 22px 24px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center;
+  }
+  .spec-list .k {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .spec-list .v {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 600; font-size: 17px;
+  }
+
   .tech-row {
     display: flex; flex-wrap: wrap; gap: 12px;
     margin-top: 40px;
   }
   .pill {
-    padding: 10px 18px;
+    padding: 12px 20px;
     border: 1px solid var(--rule);
     border-radius: 999px;
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px;
     letter-spacing: 0.2em; text-transform: uppercase;
     color: var(--ink); background: var(--paper-2);
-    display: inline-flex; align-items: center; gap: 10px;
-  }
-  .pill .chip { width: 10px; height: 10px; border-radius: 50%; }
-
-  /* ═══════════════ WHY-THIS-WINS (closing argument) ═══════════════ */
-  .why-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 28px; margin-top: 50px;
-  }
-  .why-card {
-    padding: 36px 30px;
-    background: var(--paper-2);
-    border-radius: 16px;
-    border: 1px solid var(--rule);
-    position: relative; overflow: hidden;
-    transition: transform 0.4s;
-  }
-  .why-card:hover { transform: translateY(-6px); }
-  .why-card::before {
-    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
-    background: var(--accent);
-  }
-  .why-card .badge {
-    font-family: 'JetBrains Mono', monospace; font-size: 10px;
-    letter-spacing: 0.3em; color: var(--accent); text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-  .why-card h3 {
-    font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
-    font-size: 30px; line-height: 1.15; color: var(--ink);
-    letter-spacing: -0.02em;
-  }
-  .why-card p {
-    margin-top: 14px; font-size: 14px; color: var(--ink-soft); line-height: 1.55;
-  }
-
-  /* ═══════════════ SPEC SHEET (desktop stats infographic) ═══════════════ */
-  .spec {
-    margin-top: 50px;
-    display: grid; grid-template-columns: 320px 1fr; gap: 60px;
-    padding: 40px 0;
-    border-top: 1px solid var(--ink);
-  }
-  .spec-left h3 {
-    font-size: 48px; font-family: 'Fraunces', serif; font-weight: 300;
-    line-height: 1.05; letter-spacing: -0.02em;
-  }
-  .spec-left h3 em { color: var(--vermilion); font-style: italic; }
-  .spec-left p { margin-top: 16px; font-size: 14px; }
-  .spec-list {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-    border-left: 1px solid var(--rule);
-    border-top: 1px solid var(--rule);
-  }
-  .spec-list .row {
-    padding: 18px 22px;
-    border-right: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-    display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center;
-  }
-  .spec-list .k { color: var(--ink-mute); font-size: 13px; }
-  .spec-list .v { font-family: 'Fraunces', serif; font-weight: 500; font-size: 17px; }
-
-  /* ═══════════════ CLOSING ═══════════════ */
-  .closing { padding: 140px 64px 120px; border-top: 1px solid var(--ink); }
-  .closing .mega {
-    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
-    font-size: 240px; line-height: 0.85; letter-spacing: -0.045em;
-    margin: 0;
-  }
-  .closing .mega em { color: var(--vermilion); font-style: italic; }
-  .closing .mega .dot { color: var(--teal); font-style: normal; }
-  .closing .tagline {
-    margin-top: 48px;
-    font-family: 'Fraunces', serif; font-weight: 300; font-size: 30px;
-    max-width: 740px; color: var(--ink-soft);
-  }
-  .closing .cta-row {
-    margin-top: 56px; display: flex; gap: 20px; align-items: center;
-  }
-  .closing .cta-primary {
-    display: inline-flex; align-items: center; gap: 14px;
-    padding: 22px 34px; background: var(--vermilion); color: var(--paper);
-    text-decoration: none; border-radius: 999px;
-    font-family: 'JetBrains Mono', monospace; font-weight: 700;
-    font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 12px;
     transition: transform 0.3s, background 0.3s;
   }
-  .closing .cta-primary:hover { background: var(--ink); transform: translateX(4px); }
-  .closing .cta-secondary {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
-    letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--ink-mute); text-decoration: none;
+  .pill:hover { transform: translateY(-3px); background: var(--ink); color: var(--paper); }
+  .pill .chip { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* ═══════ CLOSING ═══════ */
+  .closing {
+    padding: 160px 80px 120px;
+    border-top: 1px solid var(--ink);
   }
+  .closing .mega {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-variation-settings: "opsz" 96, "wght" 300;
+    font-weight: 300;
+    font-size: 300px;
+    line-height: 0.8; letter-spacing: -0.07em;
+    margin: 0;
+  }
+  .closing .mega em {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-weight: 400;
+    color: var(--fire);
+    letter-spacing: -0.05em;
+  }
+  .closing .mega .dot { color: var(--fire); font-style: normal; }
+  .closing .tagline {
+    margin-top: 60px;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400; font-style: italic;
+    font-size: 40px; line-height: 1.2;
+    max-width: 820px; color: var(--ink-mute);
+    letter-spacing: -0.015em;
+  }
+  .closing .tagline span { color: var(--ink); }
+  .closing .cta-row {
+    margin-top: 64px; display: flex; gap: 24px; align-items: center;
+  }
+  .closing .cta-primary {
+    display: inline-flex; align-items: center; gap: 16px;
+    padding: 24px 36px;
+    background: var(--fire); color: var(--paper);
+    text-decoration: none; border-radius: 999px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-weight: 500; font-size: 13px;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    transition: transform 0.35s, background 0.35s;
+  }
+  .closing .cta-primary:hover { background: var(--ink); transform: translateY(-3px); }
+  .closing .cta-primary .arrow { transition: transform 0.35s; display: inline-block; }
+  .closing .cta-primary:hover .arrow { transform: translate(4px, -4px) rotate(45deg); }
+  .closing .cta-secondary {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--ink-mute); text-decoration: none;
+    transition: color 0.3s;
+  }
+  .closing .cta-secondary:hover { color: var(--fire); }
 
   footer {
     border-top: 1px solid var(--rule);
-    padding: 32px 64px;
-    text-align: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    padding: 36px 80px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
     color: var(--ink-mute);
   }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════ TOPBAR ═══════════════ -->
+<!-- TOPBAR (no CTA) -->
 <div class="topbar">
-  <div><b>WONGDOODY</b> · Chennai · Interactive Wall</div>
-  <a class="demo" href="https://wongdoody-wall.vercel.app/" target="_blank" rel="noopener">
-    <span class="dot"></span>
-    <span>Live Demo</span>
-    <span>→</span>
-  </a>
+  <div class="brand">
+    <b>WONGDOODY</b>
+    <span class="sep">·</span>
+    <span>Chennai</span>
+    <span class="sep">·</span>
+    <span>Interactive Wall</span>
+  </div>
+  <div class="right">
+    <a href="#screens">Screens</a>
+    <a href="#advantages">Advantages</a>
+    <a href="#impact">Impact</a>
+  </div>
 </div>
 
-<!-- ═══════════════ HERO ═══════════════ -->
+<!-- HERO -->
 <header class="hero">
-  <svg class="hero-kolam" width="160" height="160" viewBox="0 0 160 160" aria-hidden="true">
-    <g fill="none" stroke="#C1272D" stroke-width="1">
-      <circle cx="80" cy="80" r="60" opacity="0.35"/>
-      <circle cx="80" cy="80" r="45" opacity="0.25"/>
-      <circle cx="80" cy="80" r="30" opacity="0.35"/>
+  <svg class="hero-kolam" width="140" height="140" viewBox="0 0 160 160" aria-hidden="true">
+    <g fill="none" stroke="#FF3D2E" stroke-width="1">
+      <circle cx="80" cy="80" r="60" opacity="0.3"/>
+      <circle cx="80" cy="80" r="45" opacity="0.22"/>
+      <circle cx="80" cy="80" r="30" opacity="0.3"/>
       <g opacity="0.5">
-        <circle cx="80" cy="20" r="2" fill="#C1272D"/>
-        <circle cx="80" cy="140" r="2" fill="#C1272D"/>
-        <circle cx="20" cy="80" r="2" fill="#C1272D"/>
-        <circle cx="140" cy="80" r="2" fill="#C1272D"/>
-        <circle cx="38" cy="38" r="2" fill="#2D5362"/>
-        <circle cx="122" cy="38" r="2" fill="#2D5362"/>
-        <circle cx="38" cy="122" r="2" fill="#2D5362"/>
-        <circle cx="122" cy="122" r="2" fill="#2D5362"/>
+        <circle cx="80" cy="20" r="2" fill="#FF3D2E"/>
+        <circle cx="80" cy="140" r="2" fill="#FF3D2E"/>
+        <circle cx="20" cy="80" r="2" fill="#FF3D2E"/>
+        <circle cx="140" cy="80" r="2" fill="#FF3D2E"/>
+        <circle cx="38" cy="38" r="2" fill="#2B4D5F"/>
+        <circle cx="122" cy="38" r="2" fill="#2B4D5F"/>
+        <circle cx="38" cy="122" r="2" fill="#2B4D5F"/>
+        <circle cx="122" cy="122" r="2" fill="#2B4D5F"/>
       </g>
     </g>
   </svg>
 
-  <div class="hero-grid">
+  <div class="hero-top">
     <div>
-      <div class="eyebrow reveal show">Infographic · Case Sheet · 2024</div>
-      <h1 class="hero-title reveal show" data-d="1">Hey<br><em style="font-style:italic">Doody</em><span class="dot">.</span></h1>
+      <div class="eyebrow reveal show">Case sheet · Chennai · 2024</div>
+      <h1 class="hero-title reveal show" data-d="1">
+        Hey<br><span class="d">Doody</span><span class="dot">.</span>
+      </h1>
     </div>
     <div class="hero-right reveal show" data-d="2">
-      <div class="kicker">An Interactive Wall <span class="dot"></span> Chennai Studio</div>
-      <p class="hero-lede">A <em>touch + voice installation</em> that welcomes every guest by name, tells the city's story, and showcases twenty-five years of craft.</p>
-      <div class="hero-meta">
-        <div><div class="k">Built in</div><div class="v">8 days</div></div>
-        <div><div class="k">Languages</div><div class="v">EN · தமிழ்</div></div>
-        <div><div class="k">Co-pilots</div><div class="v">Claude · GPT · Gemini</div></div>
-      </div>
-      <a class="hero-cta" href="https://wongdoody-wall.vercel.app/" target="_blank" rel="noopener">
-        <span class="live">LIVE</span>
-        <span>Open the demo</span>
-        <span class="arrow">→</span>
+      <div class="kicker">A Wongdoody Studio <span class="dot"></span> Interactive Wall</div>
+      <p class="hero-lede">A <span class="n">touch + voice</span> installation that welcomes every guest by name, tells the city's story, and plays back <em class="italic-serif">twenty-five years of craft</em>.</p>
+      <a class="primary-cta" href="https://wongdoody-wall.vercel.app/" target="_blank" rel="noopener">
+        <span class="live">Live</span>
+        <span>Walk through the wall</span>
+        <span class="arrow">↗</span>
       </a>
     </div>
   </div>
 
-  <!-- Prominent live-demo banner -->
-  <div class="demo-banner reveal show" data-d="3">
-    <div>
-      <div class="label">Walk through the real thing</div>
-      <h3>The wall is live.<br><em>Click, speak, explore.</em></h3>
-      <div class="url">wongdoody-wall.vercel.app · permission prompt? allow mic + say "Hey Doody".</div>
+  <div class="hero-meta reveal show" data-d="3">
+    <div><div class="k">Built in</div><div class="v">8 <em>days</em></div></div>
+    <div><div class="k">Screens</div><div class="v">3 <em>scenes</em></div></div>
+    <div><div class="k">Languages</div><div class="v">EN · தமிழ்</div></div>
+    <div><div class="k">Tooling</div><div class="v">Claude · GPT · Gemini</div></div>
+  </div>
+
+  <!-- trending marquee strip -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>Hey Doody</span>
+      <span>வரவேற்கிறோம்</span>
+      <span>Wongdoody Chennai</span>
+      <span>Voice-native</span>
+      <span>Kolam motifs</span>
+      <span>Infosys company</span>
+      <span>Hey Doody</span>
+      <span>வரவேற்கிறோம்</span>
+      <span>Wongdoody Chennai</span>
+      <span>Voice-native</span>
+      <span>Kolam motifs</span>
+      <span>Infosys company</span>
     </div>
-    <a class="big-btn" href="https://wongdoody-wall.vercel.app/" target="_blank" rel="noopener">
-      <span>Launch Demo</span>
-      <span>→</span>
-    </a>
   </div>
 </header>
 
 <main>
 
-<!-- ═══════════════ SCREEN GALLERY ═══════════════ -->
-<section>
-  <div class="eyebrow reveal">01 · Three Screens · Real Captures</div>
-  <h2 class="reveal" data-d="1">A surface that changes state<br>as the guest walks through.</h2>
+<!-- SCREENS -->
+<section id="screens">
+  <div class="eyebrow reveal">01 · Three screens · Real captures</div>
+  <h2 class="reveal" data-d="1">A surface that <em class="italic-serif">changes state</em><br>as the guest walks through.</h2>
 
   <div class="screens">
     <div class="screen-card reveal" data-d="1">
-      <div class="label">01 · Welcome</div>
-      <img src="screenshots/screens/01-welcome.jpg" alt="Welcome screen — guest name, Tamil greeting, cultural bubbles">
+      <div class="tag">01 · Welcome</div>
+      <img src="screenshots/screens/01-welcome.jpg" alt="Welcome screen">
       <div class="caption">
-        <div class="no">SCREEN 01</div>
+        <div class="sub">Scene 01</div>
         <h4>Welcome &amp; greet</h4>
-        <p>Name from <span class="mono">?client=</span>, Tamil blessing, sixteen Chennai stories orbiting. Voice stand-by.</p>
+        <p>Name picked from <span class="mono">?client=</span>, Tamil blessing, sixteen Chennai stories orbiting. Voice stand-by.</p>
       </div>
     </div>
     <div class="screen-card reveal" data-d="2">
-      <div class="label">02 · Legacy</div>
-      <img src="screenshots/screens/02-timeline.jpg" alt="Our History — the legacy screen">
+      <div class="tag">02 · Legacy</div>
+      <img src="screenshots/screens/02-timeline.jpg" alt="Our History screen">
       <div class="caption">
-        <div class="no">SCREEN 02</div>
+        <div class="sub">Scene 02</div>
         <h4>Our History</h4>
         <p>Twenty-five years of brand + product + AI work. Large year markers, photo memory, guided pacing.</p>
       </div>
     </div>
     <div class="screen-card reveal" data-d="3">
-      <div class="label">03 · Work</div>
+      <div class="tag">03 · Work</div>
       <img src="screenshots/screens/03-dashboard.jpg" alt="We craft awesome experiences dashboard">
       <div class="caption">
-        <div class="no">SCREEN 03</div>
+        <div class="sub">Scene 03</div>
         <h4>The Work</h4>
-        <p>"We craft <em>awesome</em> experiences." Scroll through signature work across sixteen industries.</p>
+        <p>"We craft <em class="italic-serif">awesome</em> experiences." Scroll through signature work across sixteen industries.</p>
       </div>
     </div>
   </div>
 
-  <!-- stat strip -->
   <div class="stat-strip reveal" data-d="4">
     <div class="cell"><div class="n">3</div><div class="lbl">Screens</div></div>
     <div class="cell"><div class="n">16</div><div class="lbl">Chennai stories</div></div>
@@ -595,173 +776,93 @@
   </div>
 </section>
 
-<!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+<!-- HOW IT WORKS -->
 <section>
   <div class="eyebrow reveal">02 · How it works</div>
-  <h2 class="reveal" data-d="1">Four movements. One surface.</h2>
+  <h2 class="reveal" data-d="1">Four movements.<br><em class="italic-serif">One surface.</em></h2>
 
   <div class="flow">
-    <div class="flow-step reveal" style="--accent:var(--vermilion)">
-      <div class="icon-ring">01</div>
+    <div class="flow-step reveal" style="--accent:var(--fire)">
+      <div class="num">01</div>
       <h4>Welcome</h4>
       <p>Wall detects guest. Personalises name + Tamil greeting. Chennai bubbles orbit.</p>
     </div>
-    <div class="flow-step reveal" data-d="1" style="--accent:var(--teal)">
-      <div class="icon-ring">02</div>
+    <div class="flow-step reveal" data-d="1" style="--accent:var(--stone)">
+      <div class="num">02</div>
       <h4>Explore</h4>
       <p>Tap a bubble to open three rich facts. Topics rotate every ten seconds.</p>
     </div>
-    <div class="flow-step reveal" data-d="2" style="--accent:var(--ochre)">
-      <div class="icon-ring">03</div>
+    <div class="flow-step reveal" data-d="2" style="--accent:var(--amber)">
+      <div class="num">03</div>
       <h4>Converse</h4>
       <p>"Hey Doody" wakes the mic. Ask about projects, the studio, or the city.</p>
     </div>
-    <div class="flow-step reveal" data-d="3" style="--accent:var(--olive)">
-      <div class="icon-ring">04</div>
+    <div class="flow-step reveal" data-d="3" style="--accent:var(--moss)">
+      <div class="num">04</div>
       <h4>Showcase</h4>
       <p>History → Work. Our twenty-five-year journey + sixteen signature projects.</p>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════ ADVANTAGES / KEYPOINTS ═══════════════ -->
-<section>
+<!-- ADVANTAGES -->
+<section id="advantages">
   <div class="eyebrow reveal">03 · Advantages · Keypoints</div>
-  <h2 class="reveal" data-d="1">Twelve things the wall does<br>no poster ever could.</h2>
+  <h2 class="reveal" data-d="1">Twelve things the wall does<br><em class="italic-serif">no poster ever could.</em></h2>
 
   <div class="advs">
-    <div class="adv reveal" style="--accent:var(--vermilion)">
-      <div class="no">A 01</div>
-      <div class="icon">◎</div>
-      <h4>Personalised Welcome</h4>
-      <p>Guest name auto-picked from URL. Tamil + English greeting from the first second.</p>
-    </div>
-    <div class="adv reveal" data-d="1" style="--accent:var(--teal)">
-      <div class="no">A 02</div>
-      <div class="icon">◇</div>
-      <h4>Voice Native</h4>
-      <p>"Hey Doody" wake-word. Browser-native speech — nothing streamed to the cloud.</p>
-    </div>
-    <div class="adv reveal" data-d="2" style="--accent:var(--ochre)">
-      <div class="no">A 03</div>
-      <div class="icon">✦</div>
-      <h4>Bilingual by Default</h4>
-      <p>Tamil + English side by side. The wall reads local before it reads global.</p>
-    </div>
-    <div class="adv reveal" data-d="3" style="--accent:var(--olive)">
-      <div class="no">A 04</div>
-      <div class="icon">⚲</div>
-      <h4>Touch-First</h4>
-      <p>140px touch targets, multi-touch safe, card dismiss on outside tap — kiosk-grade.</p>
-    </div>
-    <div class="adv reveal" style="--accent:var(--clay)">
-      <div class="no">A 05</div>
-      <div class="icon">◐</div>
-      <h4>Always Fresh</h4>
-      <p>Sixteen Chennai stories rotate. No two visits feel identical, no topic ever feels stale.</p>
-    </div>
-    <div class="adv reveal" data-d="1" style="--accent:var(--rose)">
-      <div class="no">A 06</div>
-      <div class="icon">◉</div>
-      <h4>Kiosk-Resilient</h4>
-      <p>API fail → graceful offline cards. Never a blank screen in front of a client.</p>
-    </div>
-    <div class="adv reveal" data-d="2" style="--accent:var(--gold)">
-      <div class="no">A 07</div>
-      <div class="icon">◈</div>
-      <h4>60 fps Smooth</h4>
-      <p>Framer Motion + GPU transforms. Reduced-motion honoured for accessibility.</p>
-    </div>
-    <div class="adv reveal" data-d="3" style="--accent:var(--teal)">
-      <div class="no">A 08</div>
-      <div class="icon">◊</div>
-      <h4>Instant Updates</h4>
-      <p>Vercel preview per branch. Fresh copy + new project → live in under a minute.</p>
-    </div>
-    <div class="adv reveal" style="--accent:var(--vermilion)">
-      <div class="no">A 09</div>
-      <div class="icon">◒</div>
-      <h4>Showcases Our Work</h4>
-      <p>Sixteen case studies across industries — telecom, fintech, healthcare, retail, more.</p>
-    </div>
-    <div class="adv reveal" data-d="1" style="--accent:var(--olive)">
-      <div class="no">A 10</div>
-      <div class="icon">◇</div>
-      <h4>Culturally Rooted</h4>
-      <p>Kolam motifs, temple icons, Carnatic music, auto rickshaws. Chennai in every pixel.</p>
-    </div>
-    <div class="adv reveal" data-d="2" style="--accent:var(--clay)">
-      <div class="no">A 11</div>
-      <div class="icon">◎</div>
-      <h4>No App Needed</h4>
-      <p>Pure web. Opens on any kiosk, tablet, or TV browser. Zero install, zero friction.</p>
-    </div>
-    <div class="adv reveal" data-d="3" style="--accent:var(--ochre)">
-      <div class="no">A 12</div>
-      <div class="icon">◆</div>
-      <h4>AI-Assisted Build</h4>
-      <p>Claude codes. ChatGPT tests. Gemini samples. Human curates. Eight days, shipped.</p>
-    </div>
+    <div class="adv reveal" style="--accent:var(--fire)"><div class="no">A 01</div><div class="icon">◎</div><h4>Personalised Welcome</h4><p>Guest name auto-picked from URL. Tamil + English greeting from the first second.</p></div>
+    <div class="adv reveal" data-d="1" style="--accent:var(--stone)"><div class="no">A 02</div><div class="icon">◇</div><h4>Voice Native</h4><p>"Hey Doody" wake-word. Browser-native speech — nothing streamed to the cloud.</p></div>
+    <div class="adv reveal" data-d="2" style="--accent:var(--amber)"><div class="no">A 03</div><div class="icon">✦</div><h4>Bilingual by Default</h4><p>Tamil + English side by side. The wall reads local before it reads global.</p></div>
+    <div class="adv reveal" data-d="3" style="--accent:var(--moss)"><div class="no">A 04</div><div class="icon">⚲</div><h4>Touch-First</h4><p>140px touch targets, multi-touch safe, card dismiss on outside tap — kiosk-grade.</p></div>
+    <div class="adv reveal" style="--accent:var(--wine)"><div class="no">A 05</div><div class="icon">◐</div><h4>Always Fresh</h4><p>Sixteen Chennai stories rotate. No two visits feel identical, no topic ever feels stale.</p></div>
+    <div class="adv reveal" data-d="1" style="--accent:var(--fire)"><div class="no">A 06</div><div class="icon">◉</div><h4>Kiosk-Resilient</h4><p>API fail → graceful offline cards. Never a blank screen in front of a client.</p></div>
+    <div class="adv reveal" data-d="2" style="--accent:var(--amber)"><div class="no">A 07</div><div class="icon">◈</div><h4>60 fps Smooth</h4><p>Framer Motion + GPU transforms. Reduced-motion honoured for accessibility.</p></div>
+    <div class="adv reveal" data-d="3" style="--accent:var(--stone)"><div class="no">A 08</div><div class="icon">◊</div><h4>Instant Updates</h4><p>Vercel preview per branch. Fresh copy + new project → live in under a minute.</p></div>
+    <div class="adv reveal" style="--accent:var(--fire)"><div class="no">A 09</div><div class="icon">◒</div><h4>Showcases Our Work</h4><p>Sixteen case studies across industries — telecom, fintech, healthcare, retail, more.</p></div>
+    <div class="adv reveal" data-d="1" style="--accent:var(--moss)"><div class="no">A 10</div><div class="icon">◇</div><h4>Culturally Rooted</h4><p>Kolam motifs, temple icons, Carnatic music, auto rickshaws. Chennai in every pixel.</p></div>
+    <div class="adv reveal" data-d="2" style="--accent:var(--wine)"><div class="no">A 11</div><div class="icon">◎</div><h4>No App Needed</h4><p>Pure web. Opens on any kiosk, tablet, or TV browser. Zero install, zero friction.</p></div>
+    <div class="adv reveal" data-d="3" style="--accent:var(--amber)"><div class="no">A 12</div><div class="icon">◆</div><h4>AI-Assisted Build</h4><p>Claude codes. ChatGPT tests. Gemini samples. Human curates. Eight days, shipped.</p></div>
   </div>
 </section>
 
-<!-- ═══════════════ CLIENT IMPACT ═══════════════ -->
-<section>
-  <div class="eyebrow reveal">04 · The Client Impact</div>
-  <h2 class="reveal" data-d="1">How it helps.<br>Why it impresses.</h2>
+<!-- CLIENT IMPACT -->
+<section id="impact">
+  <div class="eyebrow reveal">04 · The client impact</div>
+  <h2 class="reveal" data-d="1">How it helps.<br><em class="italic-serif">Why it impresses.</em></h2>
 
   <div class="impact-grid">
     <div class="impact-visual reveal" data-d="2">
       <h3>A reception that<br><em>never repeats itself.</em></h3>
-      <p class="quote">The wall sees every guest, learns their name, speaks in <em>their language</em>, and plays back our best work — live, when it matters.</p>
+      <p class="quote">The wall sees every guest, learns their name, speaks in <span>their language</span>, and plays back our best work — live, when it matters.</p>
     </div>
     <div class="impact-list reveal" data-d="3">
-      <div class="row" style="--accent:var(--vermilion)">
-        <div class="big">1st</div>
-        <div><div class="name">Impression that sticks</div><div class="desc">Guest walks in, wall greets them by name in Tamil. The moment sets the tone for the meeting.</div></div>
-        <div class="tag">Brand</div>
-      </div>
-      <div class="row" style="--accent:var(--teal)">
-        <div class="big">3×</div>
-        <div><div class="name">Conversation starter</div><div class="desc">"Hey Doody" + story bubbles open doors small-talk can't. Icebreaker engineered in.</div></div>
-        <div class="tag">Sales</div>
-      </div>
-      <div class="row" style="--accent:var(--ochre)">
-        <div class="big">16</div>
-        <div><div class="name">Projects, on demand</div><div class="desc">Any case study, any industry — one tap away. No deck, no demo reel, no setup.</div></div>
-        <div class="tag">Showcase</div>
-      </div>
-      <div class="row" style="--accent:var(--olive)">
-        <div class="big">24/7</div>
-        <div><div class="name">Always-on proof</div><div class="desc">Runs unattended. Attract mode pulls passers-by in, engages clients between meetings.</div></div>
-        <div class="tag">Ops</div>
-      </div>
-      <div class="row" style="--accent:var(--clay)">
-        <div class="big">₹0</div>
-        <div><div class="name">Marginal cost</div><div class="desc">Web-native. Runs on the wall's existing screen hardware. No per-seat license, no SaaS bill.</div></div>
-        <div class="tag">Finance</div>
-      </div>
+      <div class="row" style="--accent:var(--fire)"><div class="big">1<em>st</em></div><div><div class="name">Impression that sticks</div><div class="desc">Guest walks in, wall greets them by name in Tamil. Sets the tone for the meeting.</div></div><div class="tag">Brand</div></div>
+      <div class="row" style="--accent:var(--stone)"><div class="big">3×</div><div><div class="name">Conversation starter</div><div class="desc">"Hey Doody" + story bubbles open doors small-talk can't. Icebreaker engineered in.</div></div><div class="tag">Sales</div></div>
+      <div class="row" style="--accent:var(--amber)"><div class="big">16</div><div><div class="name">Projects, on demand</div><div class="desc">Any case study, any industry — one tap away. No deck, no demo reel, no setup.</div></div><div class="tag">Showcase</div></div>
+      <div class="row" style="--accent:var(--moss)"><div class="big">24/7</div><div><div class="name">Always-on proof</div><div class="desc">Runs unattended. Attract mode pulls passers-by in, engages clients between meetings.</div></div><div class="tag">Ops</div></div>
+      <div class="row" style="--accent:var(--wine)"><div class="big">₹0</div><div><div class="name">Marginal cost</div><div class="desc">Web-native. Runs on the wall's existing screen hardware. No per-seat license, no SaaS.</div></div><div class="tag">Finance</div></div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════ WHY THIS WINS (closing argument) ═══════════════ -->
+<!-- WHY IT WINS -->
 <section>
   <div class="eyebrow reveal">05 · Why this impresses</div>
-  <h2 class="reveal" data-d="1">Three reasons it lands.</h2>
+  <h2 class="reveal" data-d="1">Three reasons <em class="italic-serif">it lands.</em></h2>
 
   <div class="why-grid">
-    <div class="why-card reveal" style="--accent:var(--vermilion)">
+    <div class="why-card reveal" style="--accent:var(--fire)">
       <div class="badge">01 · Unmistakably ours</div>
       <h3>A studio that makes the <em>thing</em> it pitches.</h3>
-      <p>No agency stock, no template. It's our craft, visible. The wall is the work.</p>
+      <p>No agency stock, no template. It's our craft, visible. The wall <em class="italic-serif">is</em> the work.</p>
     </div>
-    <div class="why-card reveal" data-d="1" style="--accent:var(--teal)">
+    <div class="why-card reveal" data-d="1" style="--accent:var(--stone)">
       <div class="badge">02 · AI in action</div>
-      <h3>Live proof we ship with AI, <em>not just about it.</em></h3>
+      <h3>Live proof we ship <em>with</em> AI, not just about it.</h3>
       <p>Claude, ChatGPT, and Gemini in the build pipeline. Eight days. Measurable velocity.</p>
     </div>
-    <div class="why-card reveal" data-d="2" style="--accent:var(--ochre)">
+    <div class="why-card reveal" data-d="2" style="--accent:var(--amber)">
       <div class="badge">03 · Culturally grounded</div>
       <h3>Global agency, <em>local heart.</em></h3>
       <p>Tamil greeting, Kolam motifs, Carnatic icons. Chennai isn't the backdrop — it's the front page.</p>
@@ -769,55 +870,58 @@
   </div>
 </section>
 
-<!-- ═══════════════ SPEC SHEET ═══════════════ -->
+<!-- SPEC -->
 <section>
   <div class="eyebrow reveal">06 · Under the hood</div>
-  <h2 class="reveal" data-d="1">Modern web. No compromises.</h2>
+  <h2 class="reveal" data-d="1">Modern web.<br><em class="italic-serif">No compromises.</em></h2>
 
   <div class="spec">
     <div class="spec-left">
-      <h3>Built for <em>any</em> display, from the wall to your phone.</h3>
+      <h3>Built for <em>any</em> display — from the wall to your phone.</h3>
       <p>One codebase. Runs headless on the kiosk, renders identically on a preview link for clients.</p>
     </div>
     <div class="spec-list">
       <div class="row"><span class="k">Framework</span><span class="v">Next.js 16</span></div>
       <div class="row"><span class="k">Runtime</span><span class="v">React 19</span></div>
-      <div class="row"><span class="k">Styling</span><span class="v">Tailwind CSS 4</span></div>
-      <div class="row"><span class="k">Motion</span><span class="v">Framer Motion 12</span></div>
+      <div class="row"><span class="k">Styling</span><span class="v">Tailwind 4</span></div>
+      <div class="row"><span class="k">Motion</span><span class="v">Framer 12</span></div>
       <div class="row"><span class="k">Voice</span><span class="v">Browser-native</span></div>
       <div class="row"><span class="k">Hosting</span><span class="v">Vercel · Edge</span></div>
       <div class="row"><span class="k">Source</span><span class="v">GitHub · public</span></div>
-      <div class="row"><span class="k">Accessibility</span><span class="v">WCAG AA · bilingual</span></div>
+      <div class="row"><span class="k">Accessibility</span><span class="v">WCAG AA</span></div>
     </div>
   </div>
 
   <div class="tech-row reveal">
-    <div class="pill"><span class="chip" style="background:var(--vermilion)"></span>Claude</div>
-    <div class="pill"><span class="chip" style="background:var(--olive)"></span>ChatGPT</div>
-    <div class="pill"><span class="chip" style="background:var(--teal)"></span>Gemini</div>
-    <div class="pill"><span class="chip" style="background:var(--clay)"></span>GitHub</div>
-    <div class="pill"><span class="chip" style="background:var(--rose)"></span>Vercel</div>
-    <div class="pill"><span class="chip" style="background:var(--ochre)"></span>Google</div>
+    <div class="pill"><span class="chip" style="background:var(--fire)"></span>Claude</div>
+    <div class="pill"><span class="chip" style="background:var(--moss)"></span>ChatGPT</div>
+    <div class="pill"><span class="chip" style="background:var(--stone)"></span>Gemini</div>
+    <div class="pill"><span class="chip" style="background:var(--wine)"></span>GitHub</div>
+    <div class="pill"><span class="chip" style="background:var(--amber)"></span>Vercel</div>
+    <div class="pill"><span class="chip" style="background:var(--butter)"></span>Google</div>
   </div>
 </section>
 
 </main>
 
-<!-- ═══════════════ CLOSING ═══════════════ -->
+<!-- CLOSING -->
 <section class="closing">
   <div class="eyebrow reveal">Finale</div>
-  <h2 class="mega reveal" data-d="1">Hey <em style="font-style:italic">Doody</em><span class="dot">.</span></h2>
-  <p class="tagline reveal" data-d="2">The wall remembers your name. The wall speaks your language. The wall plays back our best work — live.</p>
+  <h2 class="mega reveal" data-d="1">Hey <em>Doody</em><span class="dot">.</span></h2>
+  <p class="tagline reveal" data-d="2">The wall remembers your name. The wall speaks your language. The wall plays back our best work — <span>live.</span></p>
   <div class="cta-row reveal" data-d="3">
     <a class="cta-primary" href="https://wongdoody-wall.vercel.app/" target="_blank" rel="noopener">
       <span>Open the Wall</span>
-      <span>→</span>
+      <span class="arrow">↗</span>
     </a>
     <a class="cta-secondary" href="https://github.com/u2arunn/wongdoody-wall-showcase" target="_blank" rel="noopener">View source ↗</a>
   </div>
 </section>
 
-<footer>WONGDOODY · CHENNAI · INTERACTIVE WALL · LIVE DEMO AT WONGDOODY-WALL.VERCEL.APP</footer>
+<footer>
+  <span>WONGDOODY · CHENNAI · INTERACTIVE WALL</span>
+  <span>wongdoody-wall.vercel.app</span>
+</footer>
 
 <script>
   const io = new IntersectionObserver((entries) => {
