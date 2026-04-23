@@ -2,6 +2,7 @@ node_modules/
 .DS_Store
 *.pptx
 build.js
+capture.js
 package.json
 package-lock.json
 .claude/
