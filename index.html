@@ -494,6 +494,10 @@
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 24px; margin-top: 60px;
   }
+  .why-grid.why-grid-4 { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .why-grid.why-grid-4 .why-card { padding: 36px 26px; }
+  .why-grid.why-grid-4 .why-card h3 { font-size: 26px; }
+  .why-grid.why-grid-4 .why-card p { font-size: 13px; }
   .why-card {
     padding: 44px 32px;
     background: var(--paper-2);
@@ -564,6 +568,93 @@
   .spec-list .v {
     font-family: 'Bricolage Grotesque', sans-serif;
     font-weight: 600; font-size: 17px;
+  }
+
+  /* ═══════ HOW TO USE ═══════ */
+  .howto {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; margin-top: 60px;
+    border-top: 1px solid var(--ink);
+    border-left: 1px solid var(--rule);
+  }
+  .howto-step {
+    padding: 40px 30px 44px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    background: var(--paper);
+    transition: background 0.3s;
+  }
+  .howto-step:hover { background: var(--paper-2); }
+  .howto-step::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 60px; height: 4px;
+    background: var(--accent);
+  }
+  .howto-step .step-no {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  .howto-step .gesture {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 7px 14px; border: 1px solid var(--accent);
+    border-radius: 999px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+  .howto-step .gesture svg { width: 14px; height: 14px; }
+  .howto-step h4 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1.1; margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .howto-step h4 em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--accent); }
+  .howto-step p { font-size: 13px; line-height: 1.55; color: var(--ink-2); }
+  .howto-step .hint {
+    margin-top: 18px;
+    padding: 12px 14px;
+    background: var(--paper-2);
+    border-left: 2px solid var(--accent);
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-size: 14px; color: var(--ink-2);
+    line-height: 1.4;
+  }
+
+  /* ═══════ SAMPLE DATA NOTICE ═══════ */
+  .sample-notice {
+    margin: 60px 0 0;
+    padding: 24px 30px;
+    background: var(--paper-2);
+    border: 1px dashed var(--fire);
+    border-radius: 16px;
+    display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center;
+  }
+  .sample-notice .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; background: var(--fire); color: var(--paper);
+    border-radius: 999px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 600;
+  }
+  .sample-notice .badge::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--paper);
+    animation: blink 1.6s ease-in-out infinite;
+  }
+  .sample-notice .txt {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 18px; line-height: 1.4;
+    color: var(--ink);
+  }
+  .sample-notice .txt em { color: var(--fire); font-style: italic; }
+  .sample-notice .ver {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.2em; color: var(--ink-mute);
+    text-transform: uppercase;
   }
 
   .tech-row {
@@ -660,6 +751,7 @@
   </div>
   <div class="right">
     <a href="#screens">Screens</a>
+    <a href="#howto">How to use</a>
     <a href="#advantages">Advantages</a>
     <a href="#impact">Impact</a>
   </div>
@@ -805,9 +897,66 @@
   </div>
 </section>
 
+<!-- HOW TO USE -->
+<section id="howto">
+  <div class="eyebrow reveal">03 · How to use</div>
+  <h2 class="reveal" data-d="1">Walk up. Touch, or <em class="italic-serif">talk.</em></h2>
+  <p class="reveal" data-d="2" style="font-family:'Instrument Serif',serif; font-style:italic; font-size:22px; max-width:720px; margin-top:20px; color:var(--ink-mute); line-height:1.4;">No manual. No instructions screen. The wall is designed to be <span style="color:var(--ink)">picked up in seconds</span> by any first-time guest — and deeper on a second visit.</p>
+
+  <div class="howto">
+    <div class="howto-step reveal" style="--accent:var(--fire)">
+      <div class="step-no">Step 01</div>
+      <div class="gesture">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2 L12 14 M12 14 L7 9 M12 14 L17 9"/><path d="M4 20 h16"/></svg>
+        Approach
+      </div>
+      <h4>Walk up.<br>The wall <em>greets you.</em></h4>
+      <p>Guest name is auto-picked from the URL (<span class="mono" style="font-size:12px">?client=…</span>). Tamil and English greeting fire in the first second.</p>
+      <div class="hint">"Welcome, Infosys."</div>
+    </div>
+    <div class="howto-step reveal" data-d="1" style="--accent:var(--stone)">
+      <div class="step-no">Step 02</div>
+      <div class="gesture">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8" stroke-dasharray="2 3"/></svg>
+        Tap
+      </div>
+      <h4>Tap a story bubble.<br><em>Open three facts.</em></h4>
+      <p>Any of the sixteen Chennai topics. A card slides in with three rich paragraphs — history, culture, living tradition.</p>
+      <div class="hint">Tap the Fort, tap the Marina, tap Kolam art — each opens a different story.</div>
+    </div>
+    <div class="howto-step reveal" data-d="2" style="--accent:var(--amber)">
+      <div class="step-no">Step 03</div>
+      <div class="gesture">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2 v10 M12 2 a4 4 0 0 1 4 4 v6 a4 4 0 0 1 -8 0 V6 a4 4 0 0 1 4 -4z"/><path d="M5 12 a7 7 0 0 0 14 0"/><path d="M12 19 v3"/></svg>
+        Speak
+      </div>
+      <h4>Say "Hey Doody."<br><em>Ask anything.</em></h4>
+      <p>The mic wakes on the wake-word. Ask about projects, Wongdoody, or Chennai itself. Conversational replies, cited sources.</p>
+      <div class="hint">"Hey Doody, show me retail AI work." · "Hey Doody, when did we join Infosys?"</div>
+    </div>
+    <div class="howto-step reveal" data-d="3" style="--accent:var(--moss)">
+      <div class="step-no">Step 04</div>
+      <div class="gesture">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12 h14 M14 6 l6 6 -6 6"/></svg>
+        Explore
+      </div>
+      <h4>Tap <em>Explore.</em><br>See our history + work.</h4>
+      <p>"EXPLORE WONGDOODY" enters the Legacy screen. Open the side menu → Continue to reach the Work dashboard with sixteen case studies.</p>
+      <div class="hint">Any hover tells you what to tap next — the wall never leaves you stuck.</div>
+    </div>
+  </div>
+
+  <!-- Sample data notice -->
+  <div class="sample-notice reveal" data-d="4">
+    <div class="badge">Sample content</div>
+    <div class="txt">Stories, case studies, and imagery shown are <em>sample data for this demo.</em> Final Wongdoody-approved assets will be swapped in before launch — no code change required.</div>
+    <div class="ver">v0.9 · preview</div>
+  </div>
+</section>
+
 <!-- ADVANTAGES -->
 <section id="advantages">
-  <div class="eyebrow reveal">03 · Advantages · Keypoints</div>
+  <div class="eyebrow reveal">04 · Advantages · Keypoints</div>
   <h2 class="reveal" data-d="1">Twelve things the wall does<br><em class="italic-serif">no poster ever could.</em></h2>
 
   <div class="advs">
@@ -818,7 +967,7 @@
     <div class="adv reveal" style="--accent:var(--wine)"><div class="no">A 05</div><div class="icon">◐</div><h4>Always Fresh</h4><p>Sixteen Chennai stories rotate. No two visits feel identical, no topic ever feels stale.</p></div>
     <div class="adv reveal" data-d="1" style="--accent:var(--fire)"><div class="no">A 06</div><div class="icon">◉</div><h4>Kiosk-Resilient</h4><p>API fail → graceful offline cards. Never a blank screen in front of a client.</p></div>
     <div class="adv reveal" data-d="2" style="--accent:var(--amber)"><div class="no">A 07</div><div class="icon">◈</div><h4>60 fps Smooth</h4><p>Framer Motion + GPU transforms. Reduced-motion honoured for accessibility.</p></div>
-    <div class="adv reveal" data-d="3" style="--accent:var(--stone)"><div class="no">A 08</div><div class="icon">◊</div><h4>Instant Updates</h4><p>Vercel preview per branch. Fresh copy + new project → live in under a minute.</p></div>
+    <div class="adv reveal" data-d="3" style="--accent:var(--stone)"><div class="no">A 08</div><div class="icon">◊</div><h4>Pitch-Ready</h4><p>Open a link on any laptop and the wall runs. No rig, no cables, no rehearsal — meeting-ready in one click.</p></div>
     <div class="adv reveal" style="--accent:var(--fire)"><div class="no">A 09</div><div class="icon">◒</div><h4>Showcases Our Work</h4><p>Sixteen case studies across industries — telecom, fintech, healthcare, retail, more.</p></div>
     <div class="adv reveal" data-d="1" style="--accent:var(--moss)"><div class="no">A 10</div><div class="icon">◇</div><h4>Culturally Rooted</h4><p>Kolam motifs, temple icons, Carnatic music, auto rickshaws. Chennai in every pixel.</p></div>
     <div class="adv reveal" data-d="2" style="--accent:var(--wine)"><div class="no">A 11</div><div class="icon">◎</div><h4>No App Needed</h4><p>Pure web. Opens on any kiosk, tablet, or TV browser. Zero install, zero friction.</p></div>
@@ -828,7 +977,7 @@
 
 <!-- CLIENT IMPACT -->
 <section id="impact">
-  <div class="eyebrow reveal">04 · The client impact</div>
+  <div class="eyebrow reveal">05 · The client impact</div>
   <h2 class="reveal" data-d="1">How it helps.<br><em class="italic-serif">Why it impresses.</em></h2>
 
   <div class="impact-grid">
@@ -841,38 +990,44 @@
       <div class="row" style="--accent:var(--stone)"><div class="big">3×</div><div><div class="name">Conversation starter</div><div class="desc">"Hey Doody" + story bubbles open doors small-talk can't. Icebreaker engineered in.</div></div><div class="tag">Sales</div></div>
       <div class="row" style="--accent:var(--amber)"><div class="big">16</div><div><div class="name">Projects, on demand</div><div class="desc">Any case study, any industry — one tap away. No deck, no demo reel, no setup.</div></div><div class="tag">Showcase</div></div>
       <div class="row" style="--accent:var(--moss)"><div class="big">24/7</div><div><div class="name">Always-on proof</div><div class="desc">Runs unattended. Attract mode pulls passers-by in, engages clients between meetings.</div></div><div class="tag">Ops</div></div>
-      <div class="row" style="--accent:var(--wine)"><div class="big">₹0</div><div><div class="name">Marginal cost</div><div class="desc">Web-native. Runs on the wall's existing screen hardware. No per-seat license, no SaaS.</div></div><div class="tag">Finance</div></div>
+      <div class="row" style="--accent:var(--wine)"><div class="big">1 <em>deal</em></div><div><div class="name">Pays for itself</div><div class="desc">Helps close a single new account and the wall is ROI-positive. Every pitch after is pure upside.</div></div><div class="tag">Business outcome</div></div>
+      <div class="row" style="--accent:var(--butter)"><div class="big">∞</div><div><div class="name">Compounds with every update</div><div class="desc">Swap stories, case studies, or the Tamil greeting. The asset appreciates; decks depreciate.</div></div><div class="tag">Lifetime</div></div>
     </div>
   </div>
 </section>
 
 <!-- WHY IT WINS -->
 <section>
-  <div class="eyebrow reveal">05 · Why this impresses</div>
-  <h2 class="reveal" data-d="1">Three reasons <em class="italic-serif">it lands.</em></h2>
+  <div class="eyebrow reveal">06 · Why this impresses</div>
+  <h2 class="reveal" data-d="1">Four reasons <em class="italic-serif">it lands with the client.</em></h2>
 
-  <div class="why-grid">
+  <div class="why-grid why-grid-4">
     <div class="why-card reveal" style="--accent:var(--fire)">
       <div class="badge">01 · Unmistakably ours</div>
       <h3>A studio that makes the <em>thing</em> it pitches.</h3>
-      <p>No agency stock, no template. It's our craft, visible. The wall <em class="italic-serif">is</em> the work.</p>
+      <p>No agency stock, no template. It's our craft, visible. The wall <em class="italic-serif">is</em> the work — and what clients remember when they walk back to their car.</p>
     </div>
     <div class="why-card reveal" data-d="1" style="--accent:var(--stone)">
-      <div class="badge">02 · AI in action</div>
-      <h3>Live proof we ship <em>with</em> AI, not just about it.</h3>
-      <p>Claude, ChatGPT, and Gemini in the build pipeline. Eight days. Measurable velocity.</p>
+      <div class="badge">02 · UX · craft</div>
+      <h3>Design maturity you <em>feel</em> before you describe.</h3>
+      <p>Micro-interactions, type rhythm, motion hierarchy — every second is tuned. Signals UI/UX depth without a single slide about it.</p>
     </div>
     <div class="why-card reveal" data-d="2" style="--accent:var(--amber)">
-      <div class="badge">03 · Culturally grounded</div>
-      <h3>Global agency, <em>local heart.</em></h3>
-      <p>Tamil greeting, Kolam motifs, Carnatic icons. Chennai isn't the backdrop — it's the front page.</p>
+      <div class="badge">03 · AI in action</div>
+      <h3>Live proof we ship <em>with</em> AI, not just about it.</h3>
+      <p>Claude writes, ChatGPT tests, Gemini samples. Eight days, shipped. Reads to a client as 10× delivery velocity — exactly what they're buying.</p>
+    </div>
+    <div class="why-card reveal" data-d="3" style="--accent:var(--moss)">
+      <div class="badge">04 · Business outcome</div>
+      <h3>A reception that <em>closes deals.</em></h3>
+      <p>Culturally grounded — Tamil, Kolam, Carnatic. Instantly builds trust with Indian and multinational clients alike, and turns the first hello into a signed project.</p>
     </div>
   </div>
 </section>
 
 <!-- SPEC -->
 <section>
-  <div class="eyebrow reveal">06 · Under the hood</div>
+  <div class="eyebrow reveal">07 · Under the hood</div>
   <h2 class="reveal" data-d="1">Modern web.<br><em class="italic-serif">No compromises.</em></h2>
 
   <div class="spec">
