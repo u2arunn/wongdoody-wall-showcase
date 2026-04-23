@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+*.pptx
+build.js
+package.json
+package-lock.json
+.claude/

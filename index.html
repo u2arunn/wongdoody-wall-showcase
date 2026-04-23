@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wongdoody Chennai · Interactive Wall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Tamil:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F6EFE1;         /* warm ivory */
+    --paper-2: #EEE4D1;       /* deeper ivory */
+    --paper-3: #E7DAC0;       /* sand band */
+    --ink: #1A1A1A;           /* near-black */
+    --ink-soft: #3C3C3C;
+    --ink-mute: #78736B;
+    --rule: rgba(26,26,26,0.15);
+    --vermilion: #C1272D;     /* bold accent 1 */
+    --teal: #2D5362;          /* deep teal */
+    --ochre: #B97B2A;         /* ochre */
+    --olive: #5B6B3E;         /* olive */
+    --clay: #A04E28;          /* clay brown */
+    --rose: #C75B7A;          /* muted rose */
+    --gold: #B8860B;          /* dark goldenrod */
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Paper texture */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(193,39,45,0.04) 0, transparent 40%),
+      radial-gradient(circle at 85% 70%, rgba(45,83,98,0.04) 0, transparent 40%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.04'/></svg>");
+    pointer-events: none; z-index: -1;
+  }
+
+  ::selection { background: var(--vermilion); color: var(--paper); }
+
+  /* Kolam dot field */
+  .kolam {
+    position: absolute; pointer-events: none; opacity: 0.35;
+  }
+
+  /* Typography */
+  .serif { font-family: 'Fraunces', 'Times New Roman', serif; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  .tam { font-family: 'Noto Sans Tamil', serif; }
+
+  h1, h2, h3 { font-family: 'Fraunces', serif; font-weight: 300; letter-spacing: -0.02em; line-height: 1.05; margin: 0; }
+  h1 { font-size: clamp(64px, 12vw, 180px); }
+  h2 { font-size: clamp(40px, 6vw, 84px); font-weight: 300; }
+  h3 { font-size: clamp(22px, 2.4vw, 32px); font-weight: 400; }
+  h4 { font-family: 'Fraunces', serif; font-weight: 500; letter-spacing: -0.01em; margin: 0; font-size: 22px; }
+
+  p { margin: 0; color: var(--ink-soft); }
+  p.lede { font-size: 18px; line-height: 1.7; color: var(--ink-soft); max-width: 640px; }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--vermilion);
+    font-weight: 500;
+    margin-bottom: 22px; display: inline-flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::before {
+    content: ''; display: inline-block; width: 24px; height: 1px; background: var(--vermilion);
+  }
+
+  main { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+  section { padding: 120px 0 40px; position: relative; }
+  .rule { height: 1px; background: var(--rule); }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.85s ease, transform 0.85s cubic-bezier(.2,.7,.2,1); }
+  .reveal.show { opacity: 1; transform: none; }
+  .reveal[data-d="1"]{transition-delay:.08s}.reveal[data-d="2"]{transition-delay:.16s}.reveal[data-d="3"]{transition-delay:.24s}.reveal[data-d="4"]{transition-delay:.32s}.reveal[data-d="5"]{transition-delay:.40s}.reveal[data-d="6"]{transition-delay:.48s}
+
+  /* ═══════ Top bar ═══════ */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 32px; z-index: 50;
+    pointer-events: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.25em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+  }
+  .topbar b { color: var(--ink); font-weight: 600; }
+
+  /* ═══════ HERO ═══════ */
+  .hero {
+    min-height: 100vh;
+    padding: 160px 32px 80px;
+    display: grid; grid-template-columns: 1fr; align-content: center;
+    position: relative;
+    max-width: 1320px; margin: 0 auto;
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1.05fr 1fr; gap: 80px; align-items: end;
+  }
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    font-size: clamp(80px, 14vw, 220px);
+    margin: 0;
+  }
+  .hero-title .h1-dot {
+    color: var(--vermilion); font-style: normal; display: inline-block;
+  }
+  .hero-title .h1-amp {
+    color: var(--teal); font-style: normal;
+  }
+  .hero-right {
+    padding-bottom: 12px;
+  }
+  .hero-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 22px;
+  }
+  .hero-kicker .dot {
+    display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--vermilion); margin: 0 10px; vertical-align: 2px;
+  }
+  .hero-lede {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(22px, 2.3vw, 30px);
+    font-weight: 300;
+    line-height: 1.35;
+    color: var(--ink);
+    margin: 0 0 28px;
+  }
+  .hero-lede em { color: var(--vermilion); font-style: italic; }
+
+  .hero-meta {
+    display: grid; grid-template-columns: repeat(3, auto);
+    gap: 36px;
+    padding: 24px 0 0;
+    border-top: 1px solid var(--rule);
+    font-size: 13px;
+  }
+  .hero-meta .k { color: var(--ink-mute); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; }
+  .hero-meta .v { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; margin-top: 4px; color: var(--ink); }
+
+  .hero-scroll {
+    margin-top: 72px;
+    display: flex; align-items: center; gap: 14px;
+    color: var(--ink-mute);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.35em;
+    text-transform: uppercase;
+  }
+  .hero-scroll .line {
+    width: 40px; height: 1px; background: var(--ink-mute);
+    animation: drawIn 1.6s ease-in-out infinite alternate;
+    transform-origin: left;
+  }
+  @keyframes drawIn { from { transform: scaleX(0.3); } to { transform: scaleX(1); } }
+
+  /* Decorative Kolam top-right */
+  .kolam-hero {
+    position: absolute; top: 80px; right: 40px; width: 160px; height: 160px;
+  }
+
+  /* ═══════ Brief ═══════ */
+  .two-col {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+  }
+  .two-col .left { max-width: 520px; }
+
+  .mini-stats {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+    margin-top: 20px;
+  }
+  .mini-stats .cell {
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 26px 22px;
+  }
+  .mini-stats .n {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(48px, 5vw, 72px);
+    font-weight: 300;
+    line-height: 1; letter-spacing: -0.03em;
+  }
+  .mini-stats .cell:nth-child(1) .n { color: var(--vermilion); }
+  .mini-stats .cell:nth-child(2) .n { color: var(--teal); }
+  .mini-stats .cell:nth-child(3) .n { color: var(--ochre); }
+  .mini-stats .cell:nth-child(4) .n { color: var(--olive); }
+  .mini-stats .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-mute); margin-top: 10px;
+  }
+
+  /* ═══════ Steps ═══════ */
+  .steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--ink);
+    margin-top: 60px;
+  }
+  .step {
+    border-right: 1px solid var(--rule);
+    padding: 32px 24px 40px;
+    position: relative;
+    background: transparent;
+    transition: background 0.4s;
+  }
+  .step:last-child { border-right: 0; }
+  .step:hover { background: rgba(193,39,45,0.04); }
+  .step .step-num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 72px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--accent);
+    letter-spacing: -0.04em;
+  }
+  .step h3 { margin: 18px 0 10px; color: var(--ink); }
+  .step p { font-size: 14px; color: var(--ink-soft); }
+  .step .marker {
+    position: absolute; top: -1px; left: 0; width: 60px; height: 3px;
+    background: var(--accent);
+  }
+
+  /* ═══════ Mockup ═══════ */
+  .mockup-wrap { margin-top: 70px; }
+  .mockup {
+    width: 100%; max-width: 1050px; margin: 0 auto;
+    aspect-ratio: 16/9;
+    background: var(--paper-2);
+    border-radius: 8px;
+    position: relative; overflow: hidden;
+    box-shadow:
+      0 40px 80px -40px rgba(0,0,0,0.25),
+      0 0 0 1px rgba(26,26,26,0.06);
+  }
+  .mockup::before, .mockup::after {
+    content: '';
+    position: absolute; left: 0; right: 0; height: 40px;
+    pointer-events: none;
+  }
+  .mockup::before {
+    top: 0;
+    background:
+      radial-gradient(circle at center, var(--clay) 2px, transparent 2.5px) 0 20px/30px 40px repeat-x,
+      linear-gradient(90deg, var(--paper-3) 50%, transparent);
+    background-size: 30px 40px, 100% 2px;
+  }
+  .mockup::after {
+    bottom: 0;
+    background:
+      radial-gradient(circle at center, var(--ochre) 2px, transparent 2.5px) 0 20px/30px 40px repeat-x;
+    background-size: 30px 40px;
+  }
+  .mk-center {
+    position: absolute; inset: 50px 180px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .mk-brand {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(28px, 3.6vw, 52px);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+  }
+  .mk-sub { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.25em; color: var(--ink-mute); margin-top: 2px; align-self: flex-end; }
+  .mk-divider { width: 1px; height: 26px; background: var(--vermilion); margin: 20px 0 12px; }
+  .mk-city {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.6em;
+    color: var(--vermilion); font-weight: 600;
+  }
+  .mk-welcome {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.8em; margin-top: 18px; color: var(--ink-mute);
+  }
+  .mk-guest {
+    font-family: 'Fraunces', serif;
+    font-style: italic; font-weight: 300;
+    font-size: clamp(56px, 7vw, 110px);
+    line-height: 1;
+    color: var(--vermilion);
+    margin-top: 8px;
+    letter-spacing: -0.03em;
+  }
+  .mk-greet { font-size: 13px; color: var(--ink-soft); margin-top: 10px; }
+  .mk-btn {
+    margin-top: 22px;
+    padding: 12px 28px;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.3em;
+    color: var(--ink); background: transparent;
+  }
+  .mk-mic {
+    margin-top: 18px;
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--ink-mute);
+  }
+  .mk-mic .mic {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 1px solid var(--vermilion); display: grid; place-items: center;
+    position: relative;
+  }
+  .mk-mic .mic::after {
+    content: ''; position: absolute; inset: -4px; border-radius: 50%;
+    border: 1px solid var(--vermilion); opacity: 0.35;
+    animation: pulsering 2.2s ease-out infinite;
+  }
+  @keyframes pulsering { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.9); opacity: 0; } }
+
+  .mk-side {
+    position: absolute; top: 60px; bottom: 70px;
+    width: 130px;
+    display: flex; flex-direction: column; justify-content: space-around;
+  }
+  .mk-side.left { left: 22px; }
+  .mk-side.right { right: 22px; }
+  .mk-chip { text-align: center; animation: softFloat 6s ease-in-out infinite; }
+  .mk-chip:nth-child(2) { animation-delay: 1s; }
+  .mk-chip:nth-child(3) { animation-delay: 2s; }
+  @keyframes softFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  .mk-chip .circle {
+    width: 92px; height: 92px; border-radius: 50%;
+    overflow: hidden; margin: 0 auto;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    position: relative;
+    box-shadow: 0 10px 20px -16px rgba(0,0,0,0.3);
+  }
+  .mk-chip .circle img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.85) contrast(0.95); }
+  .mk-chip .name {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em;
+    color: var(--ink-soft); text-transform: uppercase; margin-top: 10px; font-weight: 500;
+  }
+
+  .caption-italic {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
+    text-align: center; color: var(--ink-mute); font-size: 16px;
+    margin-top: 24px;
+  }
+
+  /* ═══════ Chennai Grid ═══════ */
+  .atlas {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    margin-top: 60px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .atlas-cell {
+    background: var(--paper);
+    padding: 32px 22px 26px;
+    text-align: center;
+    transition: background 0.35s, transform 0.35s;
+  }
+  .atlas-cell:hover { background: var(--paper-2); transform: scale(1.02); z-index: 2; box-shadow: 0 20px 40px -30px rgba(0,0,0,0.3); position: relative; }
+  .atlas-cell .disc {
+    width: 88px; height: 88px; margin: 0 auto 18px;
+    border-radius: 50%; overflow: hidden;
+    background: var(--paper-2);
+    position: relative;
+    border: 1px solid var(--rule);
+  }
+  .atlas-cell .disc img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9); }
+  .atlas-cell .atlas-no {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--vermilion);
+    letter-spacing: 0.2em; margin-bottom: 6px;
+  }
+  .atlas-cell h4 { font-size: 18px; font-weight: 500; }
+  .atlas-cell .tam-name {
+    font-family: 'Noto Sans Tamil', serif;
+    font-size: 12px; color: var(--ink-mute);
+    margin-top: 4px;
+  }
+
+  /* ═══════ Voice ═══════ */
+  .voice {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    margin-top: 50px;
+  }
+  .voice-status {
+    border: 1px solid var(--ink);
+    padding: 34px 36px;
+    background: var(--paper);
+    position: relative;
+  }
+  .voice-status::before {
+    content: '// STATUS';
+    position: absolute; top: -10px; left: 28px;
+    background: var(--paper);
+    padding: 0 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--vermilion); letter-spacing: 0.2em;
+  }
+  .voice-status .line {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+  }
+  .voice-status .line:last-child { border-bottom: 0; }
+  .voice-status .k { color: var(--ink-mute); }
+  .voice-status .v { font-weight: 600; }
+  .v-ok { color: var(--olive); }
+  .v-armed { color: var(--ochre); }
+  .v-ready { color: var(--vermilion); }
+  .v-intent { color: var(--teal); }
+
+  .voice-visual {
+    text-align: center;
+  }
+  .wave-mic {
+    position: relative;
+    width: 320px; height: 320px; margin: 0 auto;
+    display: grid; place-items: center;
+  }
+  .wave-mic .ring {
+    position: absolute; inset: 0; border-radius: 50%;
+    border: 1px solid var(--vermilion);
+    animation: pulsering 2.4s ease-out infinite;
+  }
+  .wave-mic .ring:nth-child(2) { animation-delay: 0.8s; }
+  .wave-mic .ring:nth-child(3) { animation-delay: 1.6s; }
+  .wave-mic .core {
+    width: 42%; height: 42%; border-radius: 50%;
+    background: var(--vermilion); color: var(--paper);
+    display: grid; place-items: center;
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 32px; font-weight: 300;
+    box-shadow: 0 30px 60px -30px rgba(193,39,45,0.5);
+  }
+  .hey-doody {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: clamp(38px, 4vw, 56px); font-weight: 300;
+    color: var(--ink);
+    margin-top: 28px;
+  }
+  .hey-doody small {
+    display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--ink-mute); letter-spacing: 0.3em; margin-top: 10px; font-style: normal; font-weight: 500;
+  }
+
+  .voice-rows {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    margin-top: 70px;
+    border-top: 1px solid var(--ink);
+  }
+  .v-row {
+    padding: 30px 22px;
+    border-right: 1px solid var(--rule);
+  }
+  .v-row:last-child { border-right: 0; }
+  .v-row .n {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 52px; font-weight: 300; color: var(--ink);
+    line-height: 1; letter-spacing: -0.03em;
+  }
+  .v-row h4 { margin: 14px 0 8px; font-weight: 500; }
+  .v-row p { font-size: 13px; }
+
+  /* ═══════ Timeline ═══════ */
+  .timeline-paper {
+    margin-top: 60px;
+    background: var(--paper-2);
+    border-radius: 6px;
+    padding: 70px 60px 90px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -40px rgba(0,0,0,0.25);
+  }
+  .timeline-paper::before {
+    content: ''; position: absolute;
+    inset: 20px;
+    border: 1px dashed rgba(26,26,26,0.18);
+    border-radius: 4px;
+    pointer-events: none;
+  }
+  .timeline-row {
+    display: flex; justify-content: space-between;
+    position: relative;
+    margin-top: 30px;
+  }
+  .timeline-row::before {
+    content: '';
+    position: absolute; left: 2%; right: 2%; top: 50%;
+    height: 2px;
+    background-image:
+      linear-gradient(90deg, transparent 0 6px, var(--ink) 6px 14px, transparent 14px 18px);
+    background-size: 18px 2px;
+    transform: translateY(-50%);
+    opacity: 0.4;
+  }
+  .tl-evt {
+    width: 14%;
+    display: flex; flex-direction: column; align-items: center;
+    position: relative;
+  }
+  .tl-evt .node {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--paper-2);
+    box-shadow: 0 0 0 1px var(--accent);
+    z-index: 2;
+  }
+  .tl-evt .year {
+    font-family: 'Fraunces', serif; font-size: clamp(22px, 2.2vw, 34px);
+    font-weight: 400; color: var(--accent); line-height: 1;
+  }
+  .tl-evt .title {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+    font-size: 14px; color: var(--ink);
+    text-align: center; max-width: 160px;
+  }
+  .tl-evt.above { padding-bottom: 40px; }
+  .tl-evt.above .year { order: 1; margin-bottom: 6px; }
+  .tl-evt.above .title { order: 2; margin-bottom: 14px; }
+  .tl-evt.above .node { order: 3; }
+  .tl-evt.below { padding-top: 40px; }
+  .tl-evt.below .node { order: 1; margin-bottom: 14px; }
+  .tl-evt.below .year { order: 2; margin-bottom: 6px; }
+  .tl-evt.below .title { order: 3; }
+
+  /* Sketchy doodles on timeline */
+  .tl-doodle { position: absolute; opacity: 0.5; }
+
+  /* ═══════ Dashboard ═══════ */
+  .dash {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .dash-left { padding-top: 10px; }
+  .dash-left h3 { font-size: 26px; font-weight: 400; margin-bottom: 16px; }
+  .dash-left p { font-size: 15px; line-height: 1.7; }
+  .dash-cases {
+    margin-top: 30px;
+    display: grid; grid-template-columns: 1fr;
+    border-top: 1px solid var(--rule);
+  }
+  .case {
+    display: grid; grid-template-columns: 60px 1fr auto; gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: center;
+  }
+  .case .c-no { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--vermilion); letter-spacing: 0.2em; }
+  .case .c-t { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 500; }
+  .case .c-t span { font-style: italic; font-weight: 400; color: var(--ink-mute); font-size: 14px; margin-left: 6px; }
+  .case .c-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.15em; color: var(--accent);
+    padding: 4px 10px; border: 1px solid var(--accent); border-radius: 99px;
+  }
+
+  .dash-right {
+    position: relative; min-height: 440px;
+  }
+  .bubble {
+    position: absolute; border-radius: 50%;
+    background: var(--paper-2);
+    border: 1px solid var(--accent);
+    display: grid; place-items: center; text-align: center;
+    font-family: 'Fraunces', serif; font-weight: 500;
+    padding: 16px;
+    transition: transform 0.5s cubic-bezier(.2,.7,.2,1), box-shadow 0.5s;
+    cursor: default;
+    animation: softFloat 7s ease-in-out infinite;
+  }
+  .bubble:hover {
+    transform: scale(1.08);
+    box-shadow: 0 20px 40px -20px rgba(0,0,0,0.3);
+    background: var(--paper);
+  }
+  .bubble .big {
+    font-size: 13px; font-weight: 600; color: var(--ink);
+  }
+  .bubble .small {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.2em; color: var(--accent);
+    margin-top: 4px; text-transform: uppercase;
+  }
+
+  /* ═══════ Toolkit ═══════ */
+  .kit {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    border-top: 1px solid var(--ink);
+    border-left: 1px solid var(--rule);
+    margin-top: 60px;
+  }
+  .kit-row {
+    padding: 40px 30px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.35s;
+  }
+  .kit-row:hover { background: var(--paper-2); }
+  .kit-row .t {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.25em;
+    color: var(--accent); margin-bottom: 12px;
+  }
+  .kit-row h3 {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+    font-size: 44px; color: var(--ink);
+    margin-bottom: 14px; letter-spacing: -0.02em;
+  }
+  .kit-row p { font-size: 14px; line-height: 1.6; }
+
+  /* ═══════ 8-day build ═══════ */
+  .days {
+    margin-top: 50px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 2px solid var(--ink);
+    border-left: 1px solid var(--rule);
+  }
+  .day {
+    padding: 28px 22px 30px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    transition: background 0.3s;
+  }
+  .day:hover { background: var(--paper-2); }
+  .day::before {
+    content: '';
+    position: absolute; top: 0; left: 0; width: 40px; height: 4px;
+    background: var(--accent);
+  }
+  .day .n {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em;
+    color: var(--ink-mute);
+  }
+  .day h4 {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 500;
+    font-size: 22px; margin: 10px 0 10px;
+  }
+  .day p { font-size: 13px; }
+
+  /* ═══════ References ═══════ */
+  .refs {
+    margin-top: 50px;
+    display: grid; grid-template-columns: 1fr;
+    border-top: 1px solid var(--ink);
+  }
+  .ref {
+    display: grid; grid-template-columns: 80px 1fr 40px; align-items: center; gap: 30px;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--rule);
+    transition: padding-left 0.3s;
+  }
+  .ref:hover { padding-left: 20px; }
+  .ref .no { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); letter-spacing: 0.2em; }
+  .ref .t { font-family: 'Fraunces', serif; font-size: clamp(28px, 3vw, 46px); font-weight: 400; letter-spacing: -0.02em; color: var(--ink); }
+  .ref .t em { color: var(--accent); font-style: italic; }
+  .ref .arrow { font-family: 'Fraunces', serif; font-size: 28px; color: var(--ink-mute); }
+  .ref .r { font-family: 'Fraunces', serif; font-style: italic; font-size: 16px; color: var(--ink-soft); margin-top: 6px; }
+
+  /* ═══════ Tests ═══════ */
+  .tests {
+    margin-top: 50px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--ink);
+    border-left: 1px solid var(--rule);
+  }
+  .t-cell {
+    padding: 30px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: 40px 1fr; gap: 24px; align-items: start;
+  }
+  .t-cell .stamp {
+    width: 40px; height: 40px; border: 1.5px solid var(--accent);
+    display: grid; place-items: center;
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 24px;
+    color: var(--accent);
+    transform: rotate(-4deg);
+  }
+  .t-cell h4 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 20px; margin-bottom: 6px; }
+  .t-cell p { font-size: 14px; color: var(--ink-soft); }
+
+  /* ═══════ Closing ═══════ */
+  .closing {
+    padding: 140px 32px 120px;
+    text-align: left;
+    max-width: 1180px; margin: 0 auto;
+    border-top: 1px solid var(--ink);
+    position: relative;
+  }
+  .closing .mega {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-weight: 300;
+    font-size: clamp(72px, 14vw, 220px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .closing .mega em { color: var(--vermilion); font-style: italic; }
+  .closing .mega .dot { color: var(--teal); font-style: normal; }
+  .closing .tagline {
+    margin-top: 40px;
+    font-family: 'Fraunces', serif; font-size: clamp(22px, 2.6vw, 36px); font-weight: 300;
+    color: var(--ink-soft); max-width: 640px;
+  }
+  .closing .tam-word {
+    font-family: 'Noto Sans Tamil', serif;
+    margin-top: 60px; color: var(--vermilion);
+    font-size: 22px; letter-spacing: 0.05em;
+  }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 40px 32px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  /* Responsive */
+  @media (max-width: 1000px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 30px; }
+    .two-col { grid-template-columns: 1fr; gap: 40px; }
+    .steps { grid-template-columns: repeat(2, 1fr); border-left: 1px solid var(--rule); }
+    .step:nth-child(2n) { border-right: 0; }
+    .voice { grid-template-columns: 1fr; }
+    .voice-rows { grid-template-columns: 1fr; }
+    .v-row { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .kit { grid-template-columns: 1fr; }
+    .days { grid-template-columns: repeat(2, 1fr); }
+    .dash { grid-template-columns: 1fr; }
+    .tests { grid-template-columns: 1fr; }
+    .atlas { grid-template-columns: repeat(2, 1fr); }
+    .mk-side { display: none; }
+    .timeline-row { flex-direction: column; gap: 24px; align-items: flex-start; }
+    .timeline-row::before { display: none; }
+    .tl-evt { width: 100%; flex-direction: row; align-items: center; padding: 0; gap: 18px; }
+    .tl-evt.above .node, .tl-evt.below .node { order: 0; margin: 0; }
+    .tl-evt .year { order: 1; margin: 0; }
+    .tl-evt .title { order: 2; margin: 0; text-align: left; max-width: none; }
+    .tl-evt.above .year, .tl-evt.above .title, .tl-evt.above { padding: 0; }
+    .ref { grid-template-columns: 60px 1fr 30px; gap: 14px; padding: 30px 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><b>WONGDOODY</b> · CHENNAI</div>
+  <div>EST. 2000 · AN INFOSYS CO.</div>
+</div>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="hero">
+  <svg class="kolam-hero" viewBox="0 0 160 160" aria-hidden="true">
+    <g fill="none" stroke="#C1272D" stroke-width="1">
+      <circle cx="80" cy="80" r="60" opacity="0.35"/>
+      <circle cx="80" cy="80" r="45" opacity="0.25"/>
+      <circle cx="80" cy="80" r="30" opacity="0.35"/>
+      <g opacity="0.5">
+        <circle cx="80" cy="20" r="2" fill="#C1272D"/>
+        <circle cx="80" cy="140" r="2" fill="#C1272D"/>
+        <circle cx="20" cy="80" r="2" fill="#C1272D"/>
+        <circle cx="140" cy="80" r="2" fill="#C1272D"/>
+        <circle cx="38" cy="38" r="2" fill="#2D5362"/>
+        <circle cx="122" cy="38" r="2" fill="#2D5362"/>
+        <circle cx="38" cy="122" r="2" fill="#2D5362"/>
+        <circle cx="122" cy="122" r="2" fill="#2D5362"/>
+      </g>
+    </g>
+  </svg>
+
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow reveal show">An interactive experience · Made in Chennai</div>
+      <h1 class="hero-title reveal show" data-d="1">
+        Hey<br><em style="font-style:italic">Doody</em><span class="h1-dot">.</span>
+      </h1>
+    </div>
+    <div class="hero-right reveal show" data-d="2">
+      <div class="hero-kicker">Wongdoody Chennai <span class="dot"></span> Interactive Wall</div>
+      <p class="hero-lede">
+        A wall that <em>welcomes, speaks, and remembers</em> — a large-format touch-and-voice experience celebrating Chennai culture and our two decades of craft.
+      </p>
+      <div class="hero-meta">
+        <div><div class="k">Built in</div><div class="v">8 days</div></div>
+        <div><div class="k">Languages</div><div class="v">EN · தமிழ்</div></div>
+        <div><div class="k">Co-pilots</div><div class="v">Claude · GPT · Gemini</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll"><span class="line"></span>Scroll to explore</div>
+</header>
+
+<main>
+
+<!-- ═══════════════ BRIEF ═══════════════ -->
+<section>
+  <div class="two-col">
+    <div class="left">
+      <div class="eyebrow reveal">01 — The Brief</div>
+      <h2 class="reveal" data-d="1">A wall that welcomes.<br><em style="font-style:italic; color:var(--vermilion)">A wall that speaks.</em></h2>
+    </div>
+    <div>
+      <p class="lede reveal">
+        The Wongdoody Chennai Interactive Wall is a touch-and-voice installation for the studio's reception. It greets visitors by name, tells the story of the city through sixteen curated topics, and opens a conversation about our work — an always-on stage for Chennai culture and Wongdoody craft.
+      </p>
+      <div class="mini-stats reveal" data-d="2">
+        <div class="cell"><div class="n">3</div><div class="lbl">Interactive Screens</div></div>
+        <div class="cell"><div class="n">16</div><div class="lbl">Chennai Stories</div></div>
+        <div class="cell"><div class="n">24+</div><div class="lbl">Years of Legacy</div></div>
+        <div class="cell"><div class="n">2</div><div class="lbl">Languages</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+<section>
+  <div class="eyebrow reveal">02 — How it works</div>
+  <h2 class="reveal" data-d="1">Four movements.<br>One seamless experience.</h2>
+  <p class="lede reveal" data-d="2" style="margin-top:20px;">Touch, voice, and live AI — stitched into a single surface.</p>
+
+  <div class="steps">
+    <div class="step reveal" style="--accent:var(--vermilion)">
+      <div class="marker"></div>
+      <div class="step-num">01</div>
+      <h3>Welcome</h3>
+      <p>Visitor approaches. Wall personalises with a name, Tamil greeting, and a living Chennai backdrop.</p>
+    </div>
+    <div class="step reveal" data-d="1" style="--accent:var(--teal)">
+      <div class="marker"></div>
+      <div class="step-num">02</div>
+      <h3>Explore</h3>
+      <p>Floating bubbles of Chennai culture rotate every few minutes. Tap any to open three rich facts.</p>
+    </div>
+    <div class="step reveal" data-d="2" style="--accent:var(--ochre)">
+      <div class="marker"></div>
+      <div class="step-num">03</div>
+      <h3>Converse</h3>
+      <p>Say "Hey Doody" and the mic opens. Ask anything about Wongdoody, our projects, or the city.</p>
+    </div>
+    <div class="step reveal" data-d="3" style="--accent:var(--olive)">
+      <div class="marker"></div>
+      <div class="step-num">04</div>
+      <h3>Showcase</h3>
+      <p>Dashboard unfolds the Wongdoody timeline and sixteen case studies across industries.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ WELCOME MOCKUP ═══════════════ -->
+<section>
+  <div class="eyebrow reveal">03 — Screen · Welcome</div>
+  <h2 class="reveal" data-d="1"><em style="font-style:italic; color:var(--vermilion)">Warm</em>, local, unmistakably Chennai.</h2>
+
+  <div class="mockup-wrap reveal" data-d="2">
+    <div class="mockup">
+      <div class="mk-side left">
+        <div class="mk-chip"><div class="circle"><img src="screenshots/carnatic-music.png" alt="Carnatic"></div><div class="name">Carnatic Music</div></div>
+        <div class="mk-chip"><div class="circle"><img src="screenshots/idli.png" alt="Idli & Dosa"></div><div class="name">Idli & Dosa</div></div>
+        <div class="mk-chip"><div class="circle"><img src="screenshots/fort-st-george.png" alt="Fort"></div><div class="name">Fort St. George</div></div>
+      </div>
+
+      <div class="mk-center">
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div class="mk-brand">WONGDOODY</div>
+          <div class="mk-sub">An Infosys company</div>
+        </div>
+        <div class="mk-divider"></div>
+        <div class="mk-city">CHENNAI</div>
+        <div class="mk-welcome">W E L C O M E</div>
+        <div class="mk-guest">Guest</div>
+        <div class="mk-greet"><span class="tam">வரவேற்கிறோம்</span> · So glad you could join us</div>
+        <div class="mk-btn">EXPLORE WONGDOODY</div>
+        <div class="mk-mic"><div class="mic">🎙</div>SPEAK TO THE WALL</div>
+      </div>
+
+      <div class="mk-side right">
+        <div class="mk-chip"><div class="circle"><img src="screenshots/auto.png" alt="Auto"></div><div class="name">Auto Rickshaws</div></div>
+        <div class="mk-chip"><div class="circle"><img src="screenshots/kollywood.png" alt="Kollywood"></div><div class="name">Kollywood</div></div>
+        <div class="mk-chip"><div class="circle"><img src="screenshots/temple.png" alt="Temple"></div><div class="name">Kapaleeshwarar</div></div>
+      </div>
+    </div>
+  </div>
+  <p class="caption-italic reveal" data-d="3">Name picks up from <span class="mono" style="font-style:normal">?client=…</span> · sixteen stories rotate in tens · bilingual by default.</p>
+</section>
+
+<!-- ═══════════════ ATLAS ═══════════════ -->
+<section>
+  <div class="eyebrow reveal">04 — Content · Chennai Atlas</div>
+  <h2 class="reveal" data-d="1">Sixteen stories.<br><em style="font-style:italic; color:var(--teal)">Three facts each.</em></h2>
+  <p class="lede reveal" data-d="2" style="margin-top:20px;">A curated atlas of the city — history, culture, and living tradition.</p>
+
+  <div class="atlas" id="atlas"></div>
+</section>
+
+<!-- ═══════════════ VOICE ═══════════════ -->
+<section>
+  <div class="eyebrow reveal">05 — Feature · Voice</div>
+  <h2 class="reveal" data-d="1">Just say "<em style="font-style:italic; color:var(--vermilion)">Hey Doody</em>."</h2>
+  <p class="lede reveal" data-d="2" style="margin-top:20px;">A wake word, an intent router, and a little memory — that's the whole trick.</p>
+
+  <div class="voice">
+    <div class="voice-status reveal" data-d="3">
+      <div class="line"><span class="k">mic</span><span class="v v-ok">granted</span></div>
+      <div class="line"><span class="k">wake</span><span class="v v-armed">armed</span></div>
+      <div class="line"><span class="k">live</span><span class="v v-ready">ready</span></div>
+      <div class="line"><span class="k">intent</span><span class="v v-intent">case-studies</span></div>
+      <div class="line"><span class="k">history</span><span class="v v-ok">3 turns</span></div>
+    </div>
+    <div class="voice-visual reveal" data-d="4">
+      <div class="wave-mic">
+        <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+        <div class="core">Hey</div>
+      </div>
+      <div class="hey-doody">wakes the wall<small>BROWSER-NATIVE · NO CLOUD</small></div>
+    </div>
+  </div>
+
+  <div class="voice-rows">
+    <div class="v-row reveal"><div class="n">01</div><h4>Browser SpeechRecognition</h4><p>Wake-word handled locally — no cloud streaming of the reception room.</p></div>
+    <div class="v-row reveal" data-d="1"><div class="n">02</div><h4>Intent routing</h4><p>Regex + LLM classifier decides: chit-chat vs. case-study lookup vs. deeper story.</p></div>
+    <div class="v-row reveal" data-d="2"><div class="n">03</div><h4>Context memory</h4><p>Session state remembers what the guest just asked — follow-ups feel natural.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════ TIMELINE ═══════════════ -->
+<section>
+  <div class="eyebrow reveal">06 — Screen · Our story</div>
+  <h2 class="reveal" data-d="1">Twenty-four years,<br><em style="font-style:italic; color:var(--ochre)">hand-drawn.</em></h2>
+  <p class="lede reveal" data-d="2" style="margin-top:20px;">A sketchy, paper-textured timeline from the founding year to today's AI partnerships.</p>
+
+  <div class="timeline-paper reveal" data-d="3">
+    <!-- doodle marks -->
+    <svg class="tl-doodle" style="top: 30px; left: 60px; width: 60px;" viewBox="0 0 60 30" aria-hidden="true"><path d="M2 25 Q10 10 20 20 Q30 30 40 15 Q50 2 58 18" fill="none" stroke="#C1272D" stroke-width="1.2" stroke-linecap="round"/></svg>
+    <svg class="tl-doodle" style="bottom: 30px; right: 60px; width: 80px;" viewBox="0 0 80 30" aria-hidden="true"><path d="M2 15 Q20 2 40 15 Q60 28 78 15" fill="none" stroke="#2D5362" stroke-width="1.2" stroke-linecap="round"/></svg>
+    <svg class="tl-doodle" style="top: 30px; right: 80px; width: 24px;" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z" fill="#B97B2A" opacity="0.6"/></svg>
+
+    <div class="timeline-row">
+      <div class="tl-evt above" style="--accent:var(--ochre)"><div class="node"></div><div class="year">2000</div><div class="title">The Beginning</div></div>
+      <div class="tl-evt below" style="--accent:var(--teal)"><div class="node"></div><div class="year">2006</div><div class="title">Design Thinking Pioneer</div></div>
+      <div class="tl-evt above" style="--accent:var(--rose)"><div class="node"></div><div class="year">2011</div><div class="title">Cannes Lions</div></div>
+      <div class="tl-evt below" style="--accent:var(--clay)"><div class="node"></div><div class="year">2015</div><div class="title">Joined Infosys</div></div>
+      <div class="tl-evt above" style="--accent:var(--olive)"><div class="node"></div><div class="year">2019</div><div class="title">AI &amp; Data Practice</div></div>
+      <div class="tl-evt below" style="--accent:var(--vermilion)"><div class="node"></div><div class="year">2024</div><div class="title">Chennai Wall · Launch</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ DASHBOARD ═══════════════ -->
+<section>
+  <div class="eyebrow reveal">07 — Screen · The work</div>
+  <h2 class="reveal" data-d="1">Sixteen case studies,<br><em style="font-style:italic; color:var(--teal)">one living dashboard.</em></h2>
+
+  <div class="dash">
+    <div class="dash-left reveal" data-d="2">
+      <h3>Industries we've shaped.</h3>
+      <p>Tap any bubble to open the full story — challenge, solution, and measured impact. A constellation of sectors, each with its own signature project.</p>
+      <div class="dash-cases">
+        <div class="case" style="--accent:var(--teal)"><div class="c-no">001</div><div class="c-t">Reimagining Customer Journeys <span>· Telecom</span></div><div class="c-tag">+240%</div></div>
+        <div class="case" style="--accent:var(--clay)"><div class="c-no">002</div><div class="c-t">Building Trust Through Design <span>· Fintech</span></div><div class="c-tag">$85M</div></div>
+        <div class="case" style="--accent:var(--vermilion)"><div class="c-no">003</div><div class="c-t">Humanising Healthcare Tech <span>· Health</span></div><div class="c-tag">-78%</div></div>
+        <div class="case" style="--accent:var(--olive)"><div class="c-no">004</div><div class="c-t">AI-powered Shopping <span>· Retail</span></div><div class="c-tag">3×</div></div>
+        <div class="case" style="--accent:var(--ochre)"><div class="c-no">005</div><div class="c-t">Wanderlust in Your Pocket <span>· Travel</span></div><div class="c-tag">#3</div></div>
+        <div class="case" style="--accent:var(--rose)"><div class="c-no">006</div><div class="c-t">Making Green Tangible <span>· Sustainability</span></div><div class="c-tag">11 industries</div></div>
+      </div>
+    </div>
+    <div class="dash-right reveal" data-d="3" id="dashRight"></div>
+  </div>
+</section>
+
+<!-- ═══════════════ TOOLKIT ═══════════════ -->
+<section>
+  <div class="eyebrow reveal">08 — The Toolkit</div>
+  <h2 class="reveal" data-d="1">AI in the front seat,<br><em style="font-style:italic; color:var(--vermilion)">the web underneath.</em></h2>
+
+  <div class="kit">
+    <div class="kit-row reveal" style="--accent:var(--vermilion)"><div class="t">AI · Co-pilot</div><h3>Claude</h3><p>Architecture, components, UX logic. The main co-pilot through every iteration of the build.</p></div>
+    <div class="kit-row reveal" data-d="1" style="--accent:var(--olive)"><div class="t">AI · QA</div><h3>ChatGPT</h3><p>The second set of eyes. Pushed every flow, checked the edge cases, wrote the regression prompts.</p></div>
+    <div class="kit-row reveal" data-d="2" style="--accent:var(--teal)"><div class="t">AI · Sampling</div><h3>Gemini</h3><p>Voice prompts, image generation references, and occasional language alternatives.</p></div>
+    <div class="kit-row reveal" data-d="3" style="--accent:var(--clay)"><div class="t">Dev</div><h3>GitHub</h3><p>Source of truth. Every iteration pinned, every branch a preview. The build's memory.</p></div>
+    <div class="kit-row reveal" data-d="4" style="--accent:var(--rose)"><div class="t">Ops</div><h3>Vercel</h3><p>Edge deploys, preview URLs per branch, zero-config handoff to the wall kiosk.</p></div>
+    <div class="kit-row reveal" data-d="5" style="--accent:var(--ochre)"><div class="t">Web</div><h3>Google</h3><p>Research, references, image samples — the sanity check on every cultural claim.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════ 8-DAY BUILD ═══════════════ -->
+<section>
+  <div class="eyebrow reveal">09 — The Build</div>
+  <h2 class="reveal" data-d="1">Eight days,<br><em style="font-style:italic; color:var(--vermilion)">iteration-first.</em></h2>
+
+  <div class="days">
+    <div class="day reveal" style="--accent:var(--ochre)"><div class="n">DAY 1</div><h4>Research · Mood</h4><p>Pinterest, Google, YouTube — Tamil Nadu, lights, mandala, Kolam.</p></div>
+    <div class="day reveal" data-d="1" style="--accent:var(--vermilion)"><div class="n">DAY 2</div><h4>Welcome Screen</h4><p>Brand mark, Tamil greeting, guest-name hook from the URL.</p></div>
+    <div class="day reveal" data-d="2" style="--accent:var(--rose)"><div class="n">DAY 3</div><h4>Chennai Bubbles</h4><p>Sixteen stories × three facts. Data shape + rotation logic.</p></div>
+    <div class="day reveal" data-d="3" style="--accent:var(--clay)"><div class="n">DAY 4</div><h4>Timeline Screen</h4><p>Paper-texture, wobbly lines, doodle stars and squiggles.</p></div>
+    <div class="day reveal" data-d="4" style="--accent:var(--teal)"><div class="n">DAY 5</div><h4>Dashboard</h4><p>Bubble cluster for case studies, concentric rings, project glyphs.</p></div>
+    <div class="day reveal" data-d="5" style="--accent:var(--olive)"><div class="n">DAY 6</div><h4>Voice — Hey Doody</h4><p>Wake word + intent routing + captions + graceful fallbacks.</p></div>
+    <div class="day reveal" data-d="6" style="--accent:var(--gold)"><div class="n">DAY 7</div><h4>Polish · Motion</h4><p>Framer transitions, soft float, ink-stroke reveals, typography rhythm.</p></div>
+    <div class="day reveal" data-d="6" style="--accent:var(--ink)"><div class="n">DAY 8</div><h4>QA · Deploy</h4><p>ChatGPT's test pass, fixes, Vercel build, onto the wall.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════ REFERENCES ═══════════════ -->
+<section>
+  <div class="eyebrow reveal">10 — Inspiration</div>
+  <h2 class="reveal" data-d="1">Sampled from many.<br><em style="font-style:italic; color:var(--teal)">Made into one.</em></h2>
+
+  <div class="refs">
+    <div class="ref reveal" style="--accent:var(--vermilion)">
+      <div class="no">001</div>
+      <div>
+        <div class="t">From <em>Pinterest</em> — visual language</div>
+        <p class="r">String lights, mandala motifs, Tamil typography, festival palettes.</p>
+      </div>
+      <div class="arrow">↗</div>
+    </div>
+    <div class="ref reveal" data-d="1" style="--accent:var(--teal)">
+      <div class="no">002</div>
+      <div>
+        <div class="t">From <em>Google</em> — the facts</div>
+        <p class="r">Cultural context for every Chennai topic, historical dates, icon references.</p>
+      </div>
+      <div class="arrow">↗</div>
+    </div>
+    <div class="ref reveal" data-d="2" style="--accent:var(--ochre)">
+      <div class="no">003</div>
+      <div>
+        <div class="t">From <em>YouTube</em> — motion</div>
+        <p class="r">Interactive wall demos, festival footage, live-kiosk reference tapes.</p>
+      </div>
+      <div class="arrow">↗</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TESTING ═══════════════ -->
+<section>
+  <div class="eyebrow reveal">11 — Testing</div>
+  <h2 class="reveal" data-d="1">ChatGPT in the<br><em style="font-style:italic; color:var(--vermilion)">QA chair.</em></h2>
+  <p class="lede reveal" data-d="2" style="margin-top:20px;">A second AI reviewing every iteration — catching the edge cases a human eye drifts past.</p>
+
+  <div class="tests">
+    <div class="t-cell reveal" style="--accent:var(--olive)"><div class="stamp">✓</div><div><h4>Accessibility</h4><p>Tamil &amp; English contrast, alt-text on every icon, visible focus.</p></div></div>
+    <div class="t-cell reveal" data-d="1" style="--accent:var(--vermilion)"><div class="stamp">✓</div><div><h4>Voice flow</h4><p>Wake word, interrupt handling, silent fallback copy when mic blocked.</p></div></div>
+    <div class="t-cell reveal" data-d="2" style="--accent:var(--teal)"><div class="stamp">✓</div><div><h4>Touch targets</h4><p>Bubbles above 140px, dismiss-on-outside for cards, multi-touch safe.</p></div></div>
+    <div class="t-cell reveal" data-d="3" style="--accent:var(--ochre)"><div class="stamp">✓</div><div><h4>Animation load</h4><p>Sixty frames on the wall kiosk · prefers-reduced-motion honoured.</p></div></div>
+    <div class="t-cell reveal" data-d="4" style="--accent:var(--clay)"><div class="stamp">✓</div><div><h4>Rotation</h4><p>Ten of sixteen topics per pass — no repeats until a full cycle.</p></div></div>
+    <div class="t-cell reveal" data-d="5" style="--accent:var(--rose)"><div class="stamp">✓</div><div><h4>Resilience</h4><p>API fail → graceful offline cards. Never a blank screen.</p></div></div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════ CLOSING ═══════════════ -->
+<section class="closing">
+  <div class="eyebrow reveal">Finale</div>
+  <h2 class="mega reveal" data-d="1">Hey <em style="font-style:italic">Doody</em><span class="dot">.</span></h2>
+  <p class="tagline reveal" data-d="2">Say hello to the wall. It'll remember your name, your language, and the question you forgot to ask.</p>
+  <div class="tam-word reveal" data-d="3">வணக்கம்</div>
+</section>
+
+<footer>WONGDOODY · CHENNAI · INTERACTIVE WALL · 2024</footer>
+
+<script>
+  // Atlas of 16
+  const atlas = [
+    { f:'fort-st-george.png',  n:'Fort St. George', t:'புனித ஜார்ஜ் கோட்டை' },
+    { f:'temple.png',          n:'Kapaleeshwarar',  t:'கபாலீஸ்வரர் கோவில்' },
+    { f:'marina-beach.png',    n:'Marina Beach',    t:'மரீனா கடற்கரை' },
+    { f:'carnatic-music.png',  n:'Carnatic Music',  t:'கர்நாடக இசை' },
+    { f:'idli.png',            n:'Idli & Dosa',     t:'இட்லி · தோசை' },
+    { f:'kollywood.png',       n:'Kollywood',       t:'கோலிவுட்' },
+    { f:'auto.png',            n:'Auto Rickshaws',  t:'ஆட்டோ ரிக்ஷா' },
+    { f:'silk-saree.png',      n:'Silk Sarees',     t:'பட்டு சேலை' },
+    { f:'coffee.png',          n:'Filter Coffee',   t:'டிகிரி காபி' },
+    { f:'cricket.png',         n:'Cricket',         t:'கிரிக்கெட்' },
+    { f:'kolam.png',           n:'Kolam Art',       t:'கோலம்' },
+    { f:'lighthouse.png',      n:'Lighthouse',      t:'கலங்கரை விளக்கம்' },
+    { f:'basilica.png',        n:'San Thome',       t:'சாந்தோம் தேவாலயம்' },
+    { f:'central-station.png', n:'Central Station', t:'சென்னை சென்ட்ரல்' },
+    { f:'it-corridor.png',     n:'IT Corridor',     t:'ஐ.டி. வழித்தடம்' },
+    { f:'crocodile-bank.png',  n:'Croc Bank',       t:'முதலை வங்கி' },
+  ];
+  const atlasEl = document.getElementById('atlas');
+  atlas.forEach((c, i) => {
+    const el = document.createElement('div');
+    el.className = 'atlas-cell reveal';
+    el.setAttribute('data-d', String((i % 6)));
+    el.innerHTML = `
+      <div class="disc"><img src="screenshots/${c.f}" alt="${c.n}"></div>
+      <div class="atlas-no">${String(i + 1).padStart(3, '0')}</div>
+      <h4>${c.n}</h4>
+      <div class="tam-name">${c.t}</div>
+    `;
+    atlasEl.appendChild(el);
+  });
+
+  // Dashboard bubbles — editorial, muted colours
+  const dashBubbles = [
+    { t:'Telecom',        c:'#2D5362',    x:6,  y:6,  s:110 },
+    { t:'Fintech',        c:'#A04E28',    x:28, y:18, s:132 },
+    { t:'Healthcare',     c:'#C1272D',    x:56, y:4,  s:120 },
+    { t:'Retail · AI',    c:'#5B6B3E',    x:74, y:24, s:142 },
+    { t:'Automotive',     c:'#B97B2A',    x:2,  y:50, s:118 },
+    { t:'Government',     c:'#C75B7A',    x:30, y:58, s:108 },
+    { t:'Education',      c:'#2D5362',    x:52, y:46, s:118 },
+    { t:'Sustainability', c:'#5B6B3E',    x:72, y:62, s:130 },
+    { t:'Travel',         c:'#C75B7A',    x:10, y:78, s:100 },
+    { t:'Media',          c:'#A04E28',    x:56, y:78, s:100 },
+  ];
+  const dashRight = document.getElementById('dashRight');
+  dashBubbles.forEach((b, i) => {
+    const el = document.createElement('div');
+    el.className = 'bubble';
+    el.style.left = b.x + '%';
+    el.style.top = b.y + '%';
+    el.style.width = b.s + 'px';
+    el.style.height = b.s + 'px';
+    el.style.setProperty('--accent', b.c);
+    el.style.borderColor = b.c;
+    el.style.animationDelay = (i * 0.15) + 's';
+    el.innerHTML = `<div><div class="big">${b.t}</div><div class="small">case study</div></div>`;
+    dashRight.appendChild(el);
+  });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => {
+    if (!el.classList.contains('show')) io.observe(el);
+  });
+</script>
+
+</body>
+</html>
